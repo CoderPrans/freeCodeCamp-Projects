@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <div id="calculator">
+  <div class="title"> JS Calculator</div>
+  <div class="display">
+    <div class="carry">0</div>
+    <div class="entry">0</div>
+  </div>
+  <div id="buttons">
+   <button id="reset" class='red' value='ac'>AC</button>
+   <button id="del" class='red' value='del'>DEL</button>
+    <button value='/'>&divide;</button>
+    <button value='*'>x</button>
+
+    <button value='7'>7</button>
+    <button value='8'>8</button>
+    <button value='9'>9</button>
+    <button value='-'>-</button>
+
+    <button value='4'>4</button>
+    <button value='5'>5</button>
+    <button value='6'>6</button>
+    <button value='+'>+</button>
+
+
+    <button value='1'>1</button>
+    <button value='2'>2</button>
+    <button value='3'>3</button>
+
+    <button id='zero' value='0'>0</button>
+    <button value='.'>.</button>
+    <button id='equal' value='='>=</button>
+
+  </div>
+</div>
+<footer>
+coded by <a href="#">Pranav Bhaskar</a>
+</footer>
+<style>
+body{
+background-color: #B0B0B0;
+}
+.title{
+font-family: monospace;
+text-align: center;
+margin-top: 6px;
+font-size: 18px;
+color: #CACACB;
+font-weight: bold;
+}
+#calculator{
+width: 300px;
+height: 400px;
+background-color: #3a3a3a;
+padding-top: 6px;
+margin-top: 7%;
+margin-left: auto;
+margin-right: auto;
+border-radius: 20px;
+box-shadow: 7px 7px 25px 1px rgba(0, 0, 0, 0.5), inset -1px -4px 12px 0.1px #202020;
+}
+#buttons {
+position: absolute;
+display: inline-block;
+width: 280px;
+height: auto;
+margin-top: 22px;
+margin-left: 15px;
+}
+button{
+font-family: monospace;
+font-weight: bold;
+font-size: 18px;
+color: white;
+border-radius: 8px;
+height: 40px;
+width: 50px;
+margin: 0 4px 10px 8px;
+background-color: #9E9EA0;
+}
+.display{
+height: 65px;
+width: 85%;
+margin-top:14px;
+margin-left: auto;
+margin-right: auto;
+border: 2px solid grey;
+background-color: #c3c2ab;
+}
+#equal {
+position: absolute;
+margin-left: 12px;
+margin-top: -50px;
+height: 90px;
+}
+#zero{
+width: 117px;
+}
+.red{
+background-color: #a72d45;
+font-size: 16px;
+}
+button,
+button:hover,
+button:active,
+button:visited {
+text-decoration: none !important;
+outline: none !important;
+}
+footer{
+font-size: 14px;
+font-family: sans;
+font-weight: normal;
+position: relative;
+margin-top: 40px;
+margin-bottom: 20px;
+text-align: center;
+}
+a,
+a:hover,
+a:active,
+a:visited {
+text-decoration: none;
+color: #762233;
+}
+.carry{
+font-family: helvetica;
+text-align: right;
+font-size: 25px;
+color:rgba(0, 0, 0, 0.6);
+}
+.entry{
+font-family: helvetica;
+text-align: right;
+font-size: 35px;
+color: rgba(0,0,0,0.9);
+}
+</style>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/3.20.1/math.js"></script>
+<script>
+$(document).ready(function(){
+var expression = '';                  // to collect continued expression
+var equals;                           // to get numerical result
+var result; // to stringify the result
+var express;
+$("button").click(function(){
+  var $this = $(this).val();
+  if($this != "=" && $this != "ac" && $this != "del"){
+  $(".entry").text($this);
+  expression += $this;
+  express = expression.replace(/\*/g, "x");
+  $(".carry").text(express);
+   if(expression.length >= 17){
+     $(".entry").text("Limit Met");
+     $("#reset").click();
+   }
+  }
+});
+
+$("#equal").click(function(){
+  equals = math.eval(expression);
+    if(Math.round(equals) === equals){    // if equals is integer, pass
+      result = equals.toString();
+    }
+    else {
+      result = equals.toFixed(3).toString();  // else limit to 4 decimals
+    }
+   if(result.length <= 10){                 // if result is in limit, pass
+  $(".entry").text(result);
+   }
+  else if(result.length > 10){
+    $(".entry").text("Limit Met");
+    $(".carry").text(express);
+  }
+
+});
+
+
+$("#reset").click(function(){           // when "ac" is cliked, reset
+  $(".entry").text("0");
+  $(".carry").text("0");
+  expression = "";
+});
+
+$("#del").click(function(){       // when "del" is clicked remove last entry
+  expression = expression.slice(0, -1);
+  express = express.slice(0, -1);
+  $(".carry").text(express);
+});
+
+
+
+});
+</script>
+</body>
+</html>
