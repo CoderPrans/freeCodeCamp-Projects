@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+</head>
+<body>
+  <header class="title">Pomodoro Timer</header>
+  <div class="lengths">
+    <div id="btnsB">
+      <h4>BREAK LENGTH</h4>
+      <button id="minusB">-</button>
+      <span class="B">5</span>
+      <button id="plusB">+</button>
+    </div>
+    <div id="btnsT">
+      <h4>SESSION LENGTH</h4>
+      <button id="minusT">-</button>
+      <span class="T">25</span>
+      <button id="plusT">+</button>
+    </div>
+    </div>
+      <div class="timer">
+         <b>SESSION   #</b>1<br /><br />25:00
+      </div>
+      <button id="reset">
+      RESET
+    </button>
+    <div class="pomodoro">
+
+    </div>
+  <footer>
+  coded by <a href="#">Pranav Bhaskar</a>
+  </footer>
+ <style>
+ body{
+ font-family: 'Oxygen', sans-serif;
+ background: #42475E;
+ text-align: center;
+}
+.title {
+ text-align: center;
+ font-size: 4em;
+ font-family: serif;
+ font-weight: bold;
+ color: tomato;
+}
+.lengths {
+ margin: 5%;
+ height: 100%;
+}
+.T, .B{
+ font-size: 2.5em;
+}
+#btnsT button, #btnsB button{
+ color: lightgoldenrodyellow;
+ background-color: transparent;
+ text-align: center;
+ font-size: 2.5em;
+ border-style: hidden;
+ cursor: pointer;
+}
+#btnsT, #btnsB {
+ margin: 0 2em 0 2em;
+ color: lightgoldenrodyellow;
+ display: inline-block;
+ font-size: 0.9em;
+ text-align: center;
+ display: inline-block;
+ background-color: transparent;
+}
+
+.timer {
+ width: 8em;
+ outline: 0;
+ margin: 1em auto 2.5em auto;
+ padding: 2.2em 0px;
+ font-size: 2em;
+ text-align: center;
+ background-color: tomato;
+ cursor: pointer;
+ border-radius: 50%;
+ border-style: outset;
+ box-shadow: 0.4em 0.4em 1.5em 0.1em rgba(0, 0, 0, 0.5);
+}
+.timer:focus{
+ outline: 0;
+}
+.timer p {
+ font-size: 3em;
+}
+
+a {
+ text-decoration: none;
+ color: black;
+}
+#theImg {
+ width: 2.37em;
+ margin:2.7%;
+}
+.pomodoro {
+ background-color: lightgoldenrodyellow;
+ width:  16.37em;
+ height: 7.5em;
+ padding: 0.9em;
+ padding-bottom: 0px;
+ margin: 3.75em auto 3.25em auto;
+ text-align: justify;
+ border-style: inset;
+}
+
+#reset{
+ color: lightgoldenrodyellow;
+ font-size: 1.5em;
+ display: block;
+ margin: 0% auto 0% auto;
+ background: rgba(0, 0, 0, 0.6);
+ border-style: hidden;
+ border-radius: 7px;
+ padding: 1% 1.5%;
+ cursor: pointer;
+}
+#reset:hover{
+ background: rgba(0, 0, 0, 0.3);
+}
+footer {
+ text-align: center;
+ color: lightgoldenrodyellow;
+ margin: 2%;
+}
+footer a {
+ color: tomato;
+}
+ </style>
+  <script
+    src="http://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+  <script type="text/javascript">
+  var Tcounter = 0;
+var Bcounter = 0;
+var sessions = 1;
+var timeleft = 1500;
+var breakleft = 300;
+var myInterval;
+var m;
+var s;
+
+// to convert in min : sec
+function tim(y) {
+m = Math.floor(y / 60);
+s = y % 60;
+return nf(m) + ":" + nf(s);
+}
+
+// to format
+function nf(x) {
+var y = x.toString();
+if (y.length == 1) {
+  y = "0" + y
+}
+return y;
+}
+
+// when timer clicked
+$(".timer").click(function() {
+
+if (!myInterval) {
+   myInterval = setInterval(timeIt, 1000);
+   $(".lengths").fadeOut();
+   $("#reset").fadeOut();
+}
+else {
+  $(".lengths").fadeIn();
+  $("#reset").fadeIn();
+  clearInterval(myInterval);
+  myInterval = false;
+}
+});
+
+function timeIt() {
+  if(sessions < 11){
+    if (Tcounter < timeleft) {
+     Tcounter++;
+     $(".timer").html("<b>SESSION   #</b>" + sessions +"<br /><br />" + tim(timeleft - Tcounter));
+    }
+    else if(timeleft == Tcounter && !Bcounter){
+      sessions++;
+      Bcounter = 1;
+      $(".pomodoro").prepend('<img id="theImg" src="http://www.myiconfinder.com/uploads/iconsets/128-128-154e2a21720dd28b060e6981c381dc6d-tomato.png" />');
+    }
+    else{
+      $(".timer").html("<b>BREAK</b><br /><br />" + tim(breakleft - Bcounter));
+      Bcounter++;
+      if(Bcounter == breakleft){
+        Tcounter = 0;
+        Bcounter = 0;
+      }
+    }
+  } else{
+    clearInterval(myInterval);
+    myInterval = false;
+    $("#reset").click(); }
+ }
+
+// when "+" clicked
+$("#plusT").click(function() {
+if (!myInterval && timeleft < 2700) {
+  timeleft += 60;
+  Tcounter = 0;
+  $(".T").html(Math.floor(timeleft/60));
+}
+});
+// when "-" clicked
+$("#minusT").click(function() {
+if (!myInterval && Math.floor(timeleft/60) > 1) {
+  timeleft -= 60;
+  Tcounter = 0;
+  $(".T").html(Math.floor(timeleft/60));
+}
+});
+
+$("#plusB").click(function() {
+if (!myInterval && breakleft < 600) {
+  breakleft += 60;
+  Bcounter = 0;
+  $(".B").html(Math.floor(breakleft/60));
+}
+});
+
+$("#minusB").click(function() {
+ if (!myInterval && Math.floor(breakleft/60) > 1) {
+  breakleft -= 60;
+  Bcounter = 0;
+  $(".B").html(Math.floor(breakleft/60));
+}
+});
+
+$("#reset").click(function(){
+if(!myInterval){
+  $(".timer").html("<b>SESSION   #</b>1<br /><br />" + tim(timeleft));
+  Tcounter = 0;
+  sessions = 1;
+  $(".pomodoro").text(" ");
+}
+});
+
+  </script>
+</body>
+</html>
