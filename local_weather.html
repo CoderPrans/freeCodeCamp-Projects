@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css">
+  <title>Local Weather</title>
+</head>
+<body>
+  <div class="container-fluid text-center">
+<p id="demo"></p>
+  <div class="header"><b>LOCAL  WEATHER</b></div>
+  <div id="content">
+ <h2 id="locName"></h2>
+ <span id="imagediv"></span>
+<h1 id="conditionText"></h1>
+<h4 id="locTemp-c"></h4>
+<h4 id="locTemp-f"></h4>
+ <button class="btn btn-default">Fahrenhiet</button> <br />
+ </div>
+  <div class="footer">
+    <i>coded by</i> Pranav Bhaskar <br /> &copy; 2017
+  </div>
+  </div>
+  <style>
+  body{
+background-color: #1c1d29  ;
+color: white;
+}
+#imagediv{
+padding: 1em;
+}
+#conditionText{
+color:  #7bd1de ;
+font-family: "Comic Sans MS";
+}
+#content{
+margin:2%;
+}
+.btn{
+width:7em;
+color:  #cb5c2c ;
+border-radius:5px;
+border-color:  #cb5c2c ;
+margin: 0.5em;
+}
+#locName{
+font-family: Times;
+text-align: center;
+padding:0 0.5em;
+}
+.footer{
+font-family: monospace;
+color: grey;
+font-size: 10px;
+}
+.header{
+font-family: Times;
+font-size: 50px;
+color:  #9aafaf  ;
+}
+  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous"></script>
+<script>
+$(document).ready(function(){
+ showPopup();
+getLocation();
+
+var x = document.getElementById("demo");
+
+var lat;
+var lon;
+var url;
+
+function getLocation() {
+if (navigator.geolocation) {
+  navigator.geolocation.getCurrentPosition(showPosition);
+} else {
+  x.innerHTML = "Geolocation is not supported by this browser.";
+}
+}
+
+function showPosition(position) {
+lat = position.coords.latitude;
+lon = position.coords.longitude;
+url = "https://api.apixu.com/v1/current.json?key=99c44b3c984944a0b00190835171402&q=" + lat +","+ lon ;
+
+ $.getJSON(url, function(data){
+   $("#locName").html(data.location.name + "<br/>" + data.location.region + "," + "<br/>" +data.location.country);
+   $("#locTemp-c").html(data.current.temp_c + " &#8451");
+   $("#locTemp-f").html(data.current.temp_f + " &#8457");
+     $("#locTemp-f").hide();
+   $("#conditionText").html(data.current.condition.text);
+   var img = $('<img id="dynamic">'); //Equivalent: $(document.createElement('img'))
+   img.attr('src', 'https:'+data.current.condition.icon);
+   img.appendTo('#imagediv');
+    });
+};
+
+function showPopup(){
+alert("Please enable your device location/GPS settings, to view weather at your location :-)");
+ }
+
+
+var check = 1;
+$(".btn").click(function(){
+  var $C = $("#locTemp-c");
+  var $F = $("#locTemp-f");
+  if (check){
+     $C.hide();
+     $F.show();
+    check = 0;
+   }else{
+     $C.show();
+     $F.hide();
+     check = 1;
+   }
+  $(this).text(function(i, text){
+    return text === "Fahrenhiet" ? "Celcius" : "Fahrenhiet"
+
+})
+});
+
+});
+</script>
+</body>
+</html>

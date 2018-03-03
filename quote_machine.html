@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <title>Quote Machine</title>
+</head>
+<body>
+  <div class="container-fluid text-center">
+<header>
+  <h1 class="text-center">Get inspired </h1>
+</header>
+<div id="quote-box" class="jumbotron">
+  <i id="sign" class="fa fa-quote-left"> </i>
+  <span id = "quote"> ;
+</span>
+  <br />
+  <span id = "author">  </span>
+
+  <div class="buttons">
+   <button class="btn pull-left" id="tweet-quote" title="Tweet me out!" target="_blank" > <a>
+      <i class="fa fa-twitter"></i>
+    </a></button>
+    <button id="nextQuote" class="btn btn-info pull-right">
+     Next quote..,
+  </button>
+  </div>
+  </div>
+
+ <footer class="footer"><i>by</i>  Pranav Bhaskar  <br />&copy; Copyright 2017</footer>
+</div>
+<style>
+body{
+background-color: #cfbbb8;
+}
+
+#quote-box{
+height: auto;
+width: auto;
+background-color: white;
+text-align: center;
+border-radius: 5px;
+margin: 50px auto;
+padding: 10px;
+}
+
+#author{
+text-allign: right;
+font-style: italic;
+}
+
+#quote{
+font-size: 25px;
+font-family:
+}
+
+#nextQuote{
+margin-top: 45px;
+margin-right: 5px;
+ }
+
+#tweet-quote{
+margin-top: 45px;
+margin-left: 5px;
+}
+
+#sign{
+font-size: 35px;
+padding: 5px;
+}
+
+.footer{
+margin-top: 100px;
+}
+</style>
+<script
+  src="https://code.jquery.com/jquery-3.3.1.min.js"
+  integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+  crossorigin="anonymous"></script>
+<script type="text/javascript">
+$(document).ready(function(){
+getQuote();
+
+var Quote;
+var Author;
+function getQuote(){
+  var url = "https://api.forismatic.com/api/1.0/?method=getQuote&lang=en&format=jsonp&jsonp=?"
+$.getJSON(url, function(data){
+  $("#quote").html( data.quoteText);
+  $("#author").html("- " + data.quoteAuthor);
+  Quote = data.quoteText;
+  Author = data.quoteAuthor;
+});
+  };
+
+$("#nextQuote").on("click", function(){
+  getQuote();
+});
+$("#tweet-quote").on("click", function(){
+  window.open("https://twitter.com/intent/tweet?text=" + '"' + Quote + '"' + ' - ' + Author + " #GET_INSPIRED");
+});
+});
+</script>
+</body>
+</html>
