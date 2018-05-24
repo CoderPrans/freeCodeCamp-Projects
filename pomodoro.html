@@ -4,9 +4,10 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Document</title>
+  <title>pomodoro timer</title>
 </head>
 <body>
+  <audio id="timer-bling" src="timer-bling.flac" preload="auto"></audio>
   <header class="title">Pomodoro Timer</header>
   <div class="lengths">
     <div id="btnsB">
@@ -190,6 +191,8 @@ function timeIt() {
       sessions++;
       Bcounter = 1;
       $(".pomodoro").prepend('<img id="theImg" src="http://www.myiconfinder.com/uploads/iconsets/128-128-154e2a21720dd28b060e6981c381dc6d-tomato.png" />');
+      // play timer sound
+      document.getElementById('timer-bling').play();
     }
     else{
       $(".timer").html("<b>BREAK</b><br /><br />" + tim(breakleft - Bcounter));
@@ -197,6 +200,8 @@ function timeIt() {
       if(Bcounter == breakleft){
         Tcounter = 0;
         Bcounter = 0;
+        // play timer sound
+        document.getElementById('timer-bling').play();
       }
     }
   } else{
