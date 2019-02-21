@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#42475E">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>pomodoro timer</title>
 </head>
@@ -24,7 +25,7 @@
     </div>
     </div>
       <div class="timer">
-         <b>SESSION  #</b>1<br /><br />25:00
+          <b>SESSION  #</b>1<br /><br /><p>25:00</p>
       </div>
       <button id="reset">
       RESET
@@ -43,8 +44,8 @@
 }
 .title {
  text-align: center;
- font-size: 3em;
- padding: 0.5em 0;
+ font-size: 2.7em;
+ padding: 0.5em 10px;
  font-family: serif;
  font-weight: bold;
  color: tomato;
@@ -75,14 +76,14 @@
 }
 
 .timer {
- width: 8em;
+ width: 9em;
  outline: 0;
- margin: 1em auto 2.5em auto;
- padding: 2.2em 0px;
- font-size: 2em;
+ margin: 3.8em auto 5.8em auto;
+ padding: 2em 0.5em 3em 0.5em;
+ font-size: 1.5em;
  font-family: monospace;
  text-align: center;
- color : #303759;
+ color : #303755;
  background-color: tomato;
  cursor: pointer;
  border-radius: 50%;
@@ -93,9 +94,10 @@
  outline: 0;
 }
 .timer p {
- font-size: 4em;
+    font-size: 2.4em;
+    margin: 0;
+    padding: 0;
 }
-
 a {
  text-decoration: none;
  color: black;
@@ -117,13 +119,13 @@ a {
 
 #reset{
  color: lightgoldenrodyellow;
- font-size: 1.5em;
+ font-size: 2em;
  display: block;
  margin: 0% auto 0% auto;
- background: rgba(0, 0, 0, 0.6);
+ background: rgba(0, 0, 0, 0.3);
  border-style: hidden;
  border-radius: 7px;
- padding: 1% 1.5%;
+ padding: 0.3em 0.6em;
  cursor: pointer;
 }
 #reset:hover{
@@ -132,7 +134,7 @@ a {
 footer {
  text-align: center;
  color: lightgoldenrodyellow;
- margin: 2%;
+ margin: 3em;
 }
 footer a {
  color: tomato;
@@ -188,7 +190,7 @@ function timeIt() {
   if(sessions < 11){
     if (Tcounter < timeleft) {
      Tcounter++;
-     $(".timer").html("<b>SESSION  #</b>" + sessions +"<br /><br />" + tim(timeleft - Tcounter));
+        $(".timer").html("<b>SESSION  #</b>" + sessions +"<br /><br /><p>" + tim(timeleft - Tcounter) + "</p>");
     }
     else if(timeleft == Tcounter && !Bcounter){
       sessions++;
@@ -198,7 +200,7 @@ function timeIt() {
       document.getElementById('timer-bling').play();
     }
     else{
-      $(".timer").html("<b>BREAK</b><br /><br />" + tim(breakleft - Bcounter));
+        $(".timer").html("<b>BREAK</b><br /><br /><p>" + tim(breakleft - Bcounter) + "</p>");
       Bcounter++;
       if(Bcounter == breakleft){
         Tcounter = 0;
@@ -248,7 +250,7 @@ $("#minusB").click(function() {
 
 $("#reset").click(function(){
 if(!myInterval){
-  $(".timer").html("<b>SESSION   #</b>1<br /><br />" + tim(timeleft));
+    $(".timer").html("<b>SESSION   #</b>1<br /><br /><p>" + tim(timeleft) + "</p>");
   Tcounter = 0;
   sessions = 1;
   $(".pomodoro").text(" ");
