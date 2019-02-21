@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <link rel="canonical" href="https://coderprans.github.io/freeCodeCamp-Projects/Pomodoro/" />
   <link rel="manifest" href="manifest.json" />
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -258,8 +259,7 @@ if(!myInterval){
 }
 });
 
-  // adding serviceWorkers.
-  navigator.serviceWorker && navigator.serviceWorker.register('./sw.js').then(function(registration) {
+  navigator.serviceWorker && navigator.serviceWorker.register('./freeCodeCamp-Projects/Pomodoro/sw.js').then(function(registration) {
   console.log('Excellent, registered with scope: ', registration.scope);
 });
   </script>

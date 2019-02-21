@@ -2,7 +2,7 @@
   "name": "Pomodoro Timer",
   "short_name": "🍅 timer",
   "display": "minimal-ui",
-  "start_url": "/freeCodeCamp-Projects/Pomodoro",
+  "start_url": "/",
   "theme_color": "tomato",
   "background_color": "#42475E",
   "icons": [
