@@ -1,0 +1,15 @@
+{
+  "name": "Pomodoro Timer",
+  "short_name": "🍅 timer",
+  "display": "minimal-ui",
+  "start_url": "/",
+  "theme_color": "tomato",
+  "background_color": "#42475E",
+  "icons": [
+    {
+      "src": "pomo_img.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
