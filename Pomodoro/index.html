@@ -259,12 +259,10 @@ if(!myInterval){
 }
 });
 
- if (navigator.serviceWorker) {
-    navigator.serviceWorker.register('/{repository}/sw.js', {scope: '/{repository}/'})
-  }
-  
-
-});
+  navigator.serviceWorker && navigator.serviceWorker.register('/freeCodeCamp-Projects/Pomodoro/sw.js', {scope: '/freeCodeCamp-Projects/Pomodoro/'})
+      .then(function(registration) {
+  console.log('Excellent, registered with scope: ', registration.scope);
+}); 
   </script>
 </body>
 </html>
