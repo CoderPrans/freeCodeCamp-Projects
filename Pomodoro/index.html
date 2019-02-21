@@ -258,11 +258,11 @@ if(!myInterval){
   $(".pomodoro").text(" ");
 }
 });
-
-  navigator.serviceWorker && navigator.serviceWorker.register('/freeCodeCamp-Projects/Pomodoro/sw.js', {scope: '/freeCodeCamp-Projects/Pomodoro/'})
-      .then(function(registration) {
-  console.log('Excellent, registered with scope: ', registration.scope);
-}); 
+ // register ServiceWorker, remember to use absolute path!
+  
+    if (navigator.serviceWorker) {
+    navigator.serviceWorker.register('/freeCodeCamp-Projects/Pomodoro/sw.js', {scope: '/freeCodeCamp-Projects/Pomodoro/'})
+  }
   </script>
 </body>
 </html>
