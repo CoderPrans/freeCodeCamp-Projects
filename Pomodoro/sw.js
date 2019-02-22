@@ -9,7 +9,7 @@ self.addEventListener('fetch', function(event) {
 const cacheName = 'v1';
 
 const cacheAssets = [
-  '/',
+  '/freeCodeCamp-Projects/Pomodoro/',
   'index.html',
   'tomato.png',
   'pomo_img.png',
