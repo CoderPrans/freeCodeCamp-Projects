@@ -9,7 +9,8 @@ self.addEventListener('install', function(event) {
       return cache.addAll([
         'index.html',
         'pomo_img.png',
-        'tomato.png'
+        'tomato.png',
+        'timer-bling.flac'
       ]); 
     }) 
   ); 
