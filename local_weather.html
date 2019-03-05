@@ -1,134 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/foundation/6.3.0/css/foundation.min.css">
-  <title>Local Weather</title>
-</head>
-<body>
-  <div class="container-fluid text-center">
-<p id="demo"></p>
-  <div class="header"><b>LOCAL  WEATHER</b></div>
-  <div id="content">
- <h2 id="locName"></h2>
- <span id="imagediv"></span>
-<h1 id="conditionText"></h1>
-<h4 id="locTemp-c"></h4>
-<h4 id="locTemp-f"></h4>
- <button class="btn btn-default">Fahrenhiet</button> <br />
- </div>
-  <div class="footer">
-    <i>coded by</i> Pranav Bhaskar <br /> &copy; 2017
-  </div>
-  </div>
-  <style>
-  body{
-background-color: #1c1d29  ;
-color: white;
-}
-#imagediv{
-padding: 1em;
-}
-#conditionText{
-color:  #7bd1de ;
-font-family: "Comic Sans MS";
-}
-#content{
-margin:2%;
-}
-.btn{
-width:7em;
-color:  #cb5c2c ;
-border-radius:5px;
-border-color:  #cb5c2c ;
-margin: 0.5em;
-}
-#locName{
-font-family: Times;
-text-align: center;
-padding:0 0.5em;
-}
-.footer{
-font-family: monospace;
-color: grey;
-font-size: 10px;
-}
-.header{
-font-family: Times;
-font-size: 35px;
-color:  #9aafaf  ;
-}
-  </style>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
-<script>
-$(document).ready(function(){
- showPopup();
-getLocation();
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Local Weather</title>
+  </head>
+  <body>
+    <div class="text-center">
+      <!-- <div class="header"><b>LOCAL WEATHER</b></div> -->
+      <div id="content">
+        <p id="locName"></p>
+        <p id="localTime"></p>
+        <p id="conditionText"></p>
+        <div class="bottom-flexbox">
+          <!-- this is a container for flexing both temp and stats. .  -->
+          <div style="display: flex; align-items: center; margin: 30px 0;">
+            <div id="imagediv"></div>
+            <div class="toggleButton">
+              <h3 class="temp" id="locTemp-c"></h3>
+              <h3 class="temp" id="locTemp-f"></h3>
+            </div>
+          </div>
+          <div class="wind">
+            <!-- precipitation, wind and pressure -->
+            <div id="locHumidity"></div>
+            <div id="locPpt"></div>
+            <div id="locWind"></div>
+          </div>
+        </div>
+      </div>
+      <div class="footer">
+        <i>coded by</i> Pranav Bhaskar <br />
+        &copy; 2017
+      </div>
+    </div>
+    <style>
+      body {
+        background-color: #1c1b25;
+        color: white;
+        font-family: Times;
+      }
+      h1,
+      h2,
+      h3,
+      h4 {
+        margin: 0;
+      }
+      #dynamic {
+        width: 120px;
+      }
+      .temp {
+        display: flex;
+        justify-content: space-between;
+        position: relative;
+        right: 15px;
+        bottom: 4px;
+        margin: 30px 0;
+      }
+      .mag {
+        font-size: 80px;
+      }
+      .notation {
+        font-size: 30px;
+      }
+      @media screen and (min-width: 1200px) {
+        .bottom-flexbox {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          width: 65vw;
+        }
+        #content {
+          width: 700px !important;
+          margin: 80px auto !important;
+        }
+      }
+      #content {
+        width: 300px;
+        margin: 60px auto;
+      }
+      .wind {
+        font-size: 23px;
+        opacity: 0.8;
+        line-height: 1.4;
+        width: 220px;
+        margin: 10px auto;
+      }
+      #locName {
+        font-size: 40px;
+        font-family: 'Times New Roman', serif;
+        opacity: 0.8;
+        padding: 0 5px;
+        margin: 10px 5px;
+      }
+      #localTime {
+        font-size: 30px;
+        opacity: 0.8;
+        padding: 0 5px;
+        margin: 10px 5px;
+      }
+      #conditionText {
+        font-size: 30px;
+        opacity: 0.8;
+        padding: 0 5px;
+        margin: 10px 5px;
+      }
+      .toggleButton {
+        cursor: pointer;
+      }
+      .footer {
+        opacity: 0.5;
+        margin-top: 150px;
+        text-align: center;
+      }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
+    <script>
+      $(document).ready(function() {
+        showPopup();
+        getLocation();
 
-var x = document.getElementById("demo");
+        var x = document.getElementById('demo');
 
-var lat;
-var lon;
-var url;
+        var lat;
+        var lon;
+        var url;
 
-function getLocation() {
-if (navigator.geolocation) {
-  navigator.geolocation.getCurrentPosition(showPosition);
-} else {
-  x.innerHTML = "Geolocation is not supported by this browser.";
-}
-}
+        function getLocation() {
+          if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+          } else {
+            x.innerHTML = 'Geolocation is not supported by this browser.';
+          }
+        }
 
-function showPosition(position) {
-lat = position.coords.latitude;
-lon = position.coords.longitude;
-url = "https://api.apixu.com/v1/current.json?key=99c44b3c984944a0b00190835171402&q=" + lat +","+ lon ;
+        function showPosition(position) {
+          lat = position.coords.latitude;
+          lon = position.coords.longitude;
+          url =
+            'https://api.apixu.com/v1/current.json?key=99c44b3c984944a0b00190835171402&q=' +
+            lat +
+            ',' +
+            lon;
 
- $.getJSON(url, function(data){
-   $("#locName").html(data.location.name + "<br/>" + data.location.region + "," + "<br/>" +data.location.country);
-   $("#locTemp-c").html(data.current.temp_c + " &#8451");
-   $("#locTemp-f").html(data.current.temp_f + " &#8457");
-     $("#locTemp-f").hide();
-   $("#conditionText").html(data.current.condition.text);
-   var img = $('<img id="dynamic">'); //Equivalent: $(document.createElement('img'))
-   img.attr('src', 'https:'+data.current.condition.icon);
-   img.appendTo('#imagediv');
-    });
-};
+          $.getJSON(url, function(data) {
+            console.log(data);
+            $('#locName').html(`
+                ${data.location.name}, ${data.location.region}
+            `);
+            $('#localTime').html(`
+                ${data.location.localtime.split(' ')[1]}
+                , &nbsp;
+                ${data.location.localtime.split(' ')[0]}
+            `);
+            $('#locTemp-c').html(
+              `<div class="mag"> 
+                ${data.current.temp_c}</div> 
+                <div class="notation"> &#8451 </div>`,
+            );
+            $('#locTemp-f').html(
+              `<div class="mag"> ${data.current.temp_f}</div>
+                <div class="notation"> &#8457 </div>`,
+            );
+            $('#locTemp-f').hide();
+            $('#conditionText').html(`
+                ${data.current.condition.text}
+                &nbsp;
+                ${data.current.is_day ? 'Day' : 'Night'}`);
+            var img = $('<img id="dynamic">');
+            img.attr('src', `https:${data.current.condition.icon}`);
+            img.appendTo('#imagediv');
+            $('#locWind').html(
+              `Wind : &nbsp;<b>${
+                data.current.wind_kph
+              }</b> <em>km/h</em> &nbsp; <b>${data.current.wind_dir}</b>`,
+            );
+            $('#locPpt').html(
+              `Precipitation : &nbsp; ${data.current.precip_mm} <em>mm</em>`,
+            );
+            $('#locHumidity').html(
+              `Humdity : &nbsp; ${data.current.humidity} <em>%</em>`,
+            );
+          });
+        }
 
-function showPopup(){
-alert("Please enable your device location/GPS settings, to view weather at your location :-)");
- }
+        function showPopup() {
+          alert(
+            'Please enable your device location/GPS settings, to view weather at your location :-)',
+          );
+        }
 
-
-var check = 1;
-$(".btn").click(function(){
-  var $C = $("#locTemp-c");
-  var $F = $("#locTemp-f");
-  if (check){
-     $C.hide();
-     $F.show();
-    check = 0;
-   }else{
-     $C.show();
-     $F.hide();
-     check = 1;
-   }
-  $(this).text(function(i, text){
-    return text === "Fahrenhiet" ? "Celcius" : "Fahrenhiet"
-
-})
-});
-
-});
-</script>
-</body>
+        var check = 1;
+        $('.toggleButton').click(function() {
+          var $C = $('#locTemp-c');
+          var $F = $('#locTemp-f');
+          if (check) {
+            $C.hide();
+            $F.show();
+            check = 0;
+          } else {
+            $C.show();
+            $F.hide();
+            check = 1;
+          }
+        });
+      });
+    </script>
+  </body>
 </html>
