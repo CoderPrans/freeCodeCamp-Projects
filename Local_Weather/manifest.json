@@ -8,7 +8,7 @@
   "icons": [
     {
       "src": "weather-icon.png",
-      "sizes": "480x480",
+      "sizes": "512x512",
       "type": "image/png"
     }
   ]
