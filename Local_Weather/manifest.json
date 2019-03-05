@@ -1,0 +1,15 @@
+{
+  "name": "Local Weather",
+  "short_name": "weather",
+  "display": "standalone",
+  "start_url": ".",
+  "theme_color": "#1c1b25",
+  "background_color": "#1c1b25",
+  "icons": [
+    {
+      "src": "weather-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
