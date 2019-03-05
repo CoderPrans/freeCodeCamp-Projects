@@ -37,7 +37,7 @@
       </div>
       <div class="footer">
         <i>coded by</i> Pranav Bhaskar <br />
-        &copy; 2017
+        <span class="copyright"></span>
       </div>
     </div>
     <style>
@@ -216,6 +216,7 @@
             check = 1;
           }
         });
+        $('.copyright').html(`&copy; ${new Date().getFullYear()}`);
         if ('serviceWorker' in navigator) {
           navigator.serviceWorker.register('sw.js');
         }
