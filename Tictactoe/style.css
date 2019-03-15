@@ -11,7 +11,8 @@ body {
   padding: 5px;
   margin: 25px 10px 0 10px;
   width: 76px;
-  border-style:none;
+  border-style: none;
+  border-radius: 3px;
   background: indianred;
   font-size: 1em;
   cursor: pointer;
@@ -52,18 +53,18 @@ body {
   color: white;
 }
 .result {
- display: none;
- width: 220px;
- top: 140px;
- background-color: goldenrod;
- position: absolute;
- left: 50%;
- opacity: 0.8;
- margin-left: -110px;
- padding-top: 50px;
- padding-bottom: 50px;
- text-align: center;
- border-radius: 5px;
- font-size: 3em;
- color: wheat;
+  display: none;
+  width: 220px;
+  top: 140px;
+  background-color: goldenrod;
+  position: absolute;
+  left: 50%;
+  opacity: 0.8;
+  margin-left: -110px;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  text-align: center;
+  border-radius: 5px;
+  font-size: 3em;
+  color: wheat;
 }
