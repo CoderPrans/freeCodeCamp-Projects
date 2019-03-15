@@ -1,36 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <link rel="stylesheet" href="style.css">
-  <title>Tic-Tac-Toe</title>
-</head>
-<body>
-<div class="input">
-  <span style="color: white">Choose !!!</span> <br />
-  <button class="entry" value="X">X</button>
-  <button class="entry" value="O">O</button>
-  <br />
-</div>
- <div class="wrapper">
-  <div id=0 class="box" data-i=0> </div>
-  <div id=1 class="box" data-i=1> </div>
-  <div id=2 class="box" data-i=2> </div>
-  <div id=3 class="box" data-i=3> </div>
-  <div id=4 class="box" data-i=4> </div>
-  <div id=5 class="box" data-i=5> </div>
-  <div id=6 class="box" data-i=6> </div>
-  <div id=7 class="box" data-i=7> </div>
-  <div id=8 class="box" data-i=8> </div>
-</div>
-<span class="result"></span>
-  <button id="reset">RESET</button>
-<footer style="color: darkslategray"> coded by <br /><a href="#" style="color: lemonchiffon; text-decoration: none">Pranav Bhaskar</a></footer>
-  <script
-    src="https://code.jquery.com/jquery-3.3.1.min.js"
-    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-    crossorigin="anonymous"></script>
+  <head>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tic-Tac-Toe</title>
+  </head>
+  <body>
+    <div class="input">
+      <span style="color: white">Choose !!!</span> <br />
+      <button class="entry" value="X">X</button>
+      <button class="entry" value="O">O</button>
+      <br />
+    </div>
+    <div class="wrapper">
+      <div id="0" class="box" data-i="0"></div>
+      <div id="1" class="box" data-i="1"></div>
+      <div id="2" class="box" data-i="2"></div>
+      <div id="3" class="box" data-i="3"></div>
+      <div id="4" class="box" data-i="4"></div>
+      <div id="5" class="box" data-i="5"></div>
+      <div id="6" class="box" data-i="6"></div>
+      <div id="7" class="box" data-i="7"></div>
+      <div id="8" class="box" data-i="8"></div>
+    </div>
+    <span class="result"></span>
+    <button id="reset">RESET</button>
+    <footer style="color: darkslategray">
+      coded by <br /><a
+        href="#"
+        style="color: lemonchiffon; text-decoration: none"
+        >Pranav Bhaskar</a
+      >
+    </footer>
+    <script
+      src="https://code.jquery.com/jquery-3.3.1.min.js"
+      integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+      crossorigin="anonymous"
+    ></script>
 
-<script type="text/javascript" src="game.js"></script>
-
-</body>
+    <script type="text/javascript" src="game.js"></script>
+  </body>
 </html>

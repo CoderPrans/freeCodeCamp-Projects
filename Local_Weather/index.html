@@ -9,6 +9,7 @@
       rel="canonical"
       href="https://coderprans.github.io/freeCodeCamp-Projects/Local_Weather/"
     />
+    <link rel="stylesheet" href="style.css" type="text/css" />
     <title>Local Weather</title>
   </head>
   <body>
@@ -40,83 +41,6 @@
         <span class="copyright"></span>
       </div>
     </div>
-    <style>
-      body {
-        background-color: #1c1b25;
-        color: white;
-        font-family: Times;
-      }
-      h1,
-      h2,
-      h3,
-      h4 {
-        margin: 0;
-      }
-      #dynamic {
-        width: 120px;
-      }
-      .temp {
-        display: flex;
-        justify-content: space-between;
-        margin: 30px 0;
-      }
-      .mag {
-        font-size: 80px;
-      }
-      .notation {
-        font-size: 30px;
-      }
-      @media screen and (min-width: 1200px) {
-        .bottom-flexbox {
-          display: flex;
-          align-items: center;
-          justify-content: space-between;
-          width: 65vw;
-        }
-        #content {
-          width: 700px !important;
-          margin: 80px auto !important;
-        }
-      }
-      #content {
-        width: 300px;
-        margin: 60px auto;
-      }
-      .wind {
-        font-size: 21px;
-        opacity: 0.8;
-        line-height: 1.4;
-        width: 220px;
-        margin: 10px auto;
-      }
-      #locName {
-        font-size: 40px;
-        font-family: 'Times New Roman', serif;
-        opacity: 0.8;
-        padding: 0 5px;
-        margin: 10px 5px;
-      }
-      #localTime {
-        font-size: 30px;
-        opacity: 0.8;
-        padding: 0 5px;
-        margin: 10px 5px;
-      }
-      #conditionText {
-        font-size: 30px;
-        opacity: 0.8;
-        padding: 0 5px;
-        margin: 10px 5px;
-      }
-      .toggleButton {
-        cursor: pointer;
-      }
-      .footer {
-        opacity: 0.5;
-        margin-top: 150px;
-        text-align: center;
-      }
-    </style>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script
@@ -142,7 +66,6 @@
             x.innerHTML = 'Geolocation is not supported by this browser.';
           }
         }
-
         function showPosition(position) {
           lat = position.coords.latitude;
           lon = position.coords.longitude;
