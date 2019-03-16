@@ -181,6 +181,5 @@ $(document).ready(() => {
     }
   }
 });
-// $(".check").click(function() {
-//   $(".checksp").text(availSpots(board));
-// });
+
+$('.copyright').html(`&copy; ${new Date().getFullYear()}`);
