@@ -35,6 +35,7 @@
             <div id="locWind"></div>
           </div>
         </div>
+        <div class="forecast"></div>
       </div>
       <div class="footer">
         <i>coded by</i> Pranav Bhaskar <br />
@@ -69,11 +70,7 @@
         function showPosition(position) {
           lat = position.coords.latitude;
           lon = position.coords.longitude;
-          url =
-            'https://api.apixu.com/v1/current.json?key=99c44b3c984944a0b00190835171402&q=' +
-            lat +
-            ',' +
-            lon;
+          url = `https://api.apixu.com/v1/forecast.json?key=99c44b3c984944a0b00190835171402&q=${lat},${lon}&days=7`;
 
           $.getJSON(url, function(data) {
             console.log(data);
@@ -113,6 +110,34 @@
             $('#locHumidity').html(
               `Humdity : &nbsp; ${data.current.humidity} <em>%</em>`,
             );
+            var months = [
+              'Jan',
+              'Feb',
+              'Mar',
+              'Apr',
+              'May',
+              'Jun',
+              'Jul',
+              'Aug',
+              'Sep',
+              'Oct',
+              'Nov',
+              'Dec',
+            ];
+            data.forecast.forecastday.forEach(arr => {
+              var daycast = $(`<div>
+                                <h4>${arr.date.slice(8)} ${
+                months[parseInt(arr.date.slice(5, 7)) - 1]
+              }</h4><br /> 
+                                <img src="https://${
+                                  arr.day.condition.icon
+                                }"><br />
+                  <span>${
+                    arr.day.maxtemp_c
+                  } <span style="font-size: 17px;">&#8451</span></span>
+                            </div>`);
+              $('.forecast').append(daycast);
+            });
           });
         }
 
