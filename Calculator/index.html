@@ -1,8 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-  <link rel="canonical" href="https://coderprans.github.io/freeCodeCamp-Projects/Calculator/" />
-  <link rel="manifest" href="manifest.json" />
+    <link
+      rel="canonical"
+      href="https://coderprans.github.io/freeCodeCamp-Projects/Calculator/"
+    />
+    <link rel="manifest" href="manifest.json" />
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
@@ -29,23 +32,23 @@
         font-weight: bold;
       }
       #calculator {
-        width: 300px;
-        height: 430px;
+        width: 340px;
+        height: 450px;
         background-color: #3a3a3a;
         padding-top: 6px;
         margin-top: 7%;
-        margin-left: auto;
-        margin-right: auto;
+        /* margin-left: auto;
+        margin-right: auto; */
         border-radius: 20px;
         box-shadow: 7px 7px 25px 1px rgba(0, 0, 0, 0.5),
           inset -1px -4px 12px 0.1px #202020;
       }
       #buttons {
         position: absolute;
-        width: 280px;
+        width: 300px;
         height: auto;
         margin-top: 22px;
-        margin-left: 10px;
+        margin-left: 20px;
       }
       #buttons div {
         display: flex;
@@ -54,14 +57,14 @@
       button {
         font-family: monospace;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 21px;
         display: flex;
         align-items: center;
         justify-content: space-evenly;
         color: white;
         border-radius: 8px;
-        height: 40px;
-        width: 50px;
+        height: 45px;
+        width: 63px;
         margin: 0 4px 10px 4px;
         background-color: #9e9ea0;
       }
@@ -140,7 +143,7 @@
             <button id="reset" class="red" value="ac">AC</button>
             <button id="del" class="red" value="del">DEL</button>
             <button value="^">^</button>
-            <button value="i">i</button>
+            <button value="+">+</button>
           </div>
           <div>
             <button value="7">7</button>
@@ -163,12 +166,11 @@
           <div>
             <button value=".">.</button>
             <button id="zero" value="0">0</button>
-            <button value="+">+</button>
+            <button value="i">i</button>
             <button id="equal" value="=">=</button>
           </div>
         </div>
       </div>
-      <footer>coded by <a href="#">Pranav Bhaskar</a></footer>
     </div>
     <script
       src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -235,9 +237,9 @@
           }
         }
 
-    if ('serviceWorker' in navigator) {
-					navigator.serviceWorker.register('sw.js');
-	} 
+        if ('serviceWorker' in navigator) {
+          navigator.serviceWorker.register('sw.js');
+        }
       });
     </script>
   </body>
