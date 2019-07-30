@@ -1,0 +1,17 @@
+{
+  "name": "url-shortner-microservice",
+  "version": "1.0.0",
+  "description": "a freeCodeCamp api and microservices certification project",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Pranav Bhaskar",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "mongodb": "^3.3.0-beta2",
+    "mongoose": "^5.6.7"
+  }
+}

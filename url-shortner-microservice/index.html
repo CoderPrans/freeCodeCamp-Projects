@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <title>URL Shortener</title>
+    <link
+      rel="shortcut icon"
+      href="https://cdn.hyperdev.com/us-east-1%3A52a203ff-088b-420f-81be-45bf559d01b1%2Ffavicon.ico"
+      type="image/x-icon"
+    />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto"
+      rel="stylesheet"
+      type="text/css"
+    />
+    <style>
+      body {
+        font-family: 'Roboto', sans-serif;
+        font-size: 16px;
+        color: #222;
+        background-color: #fafafa;
+        text-align: center;
+        line-height: 1.4em;
+      }
+
+      .container {
+        padding: 0;
+        margin-top: 40px;
+      }
+
+      h3 {
+        margin-top: 30px;
+      }
+
+      .footer {
+        margin-top: 40px;
+      }
+
+      .user-stories {
+        position: relative;
+        text-align: justify;
+        max-width: 700px;
+        margin: 15px auto;
+      }
+      code {
+        font-family: monospace;
+        padding: 2px;
+        color: black;
+        background-color: #fff;
+      }
+      ol {
+        list-style-position: inside;
+      }
+      ul {
+        list-style-type: none;
+      }
+
+      li {
+        margin-bottom: 0.5em;
+      }
+      .user-stories li {
+        margin-bottom: 1em;
+      }
+
+      a {
+        color: #2574a9;
+      }
+
+      form {
+        border: solid 1px black;
+        border-radius: 5px;
+        margin: 10px auto;
+        padding: 20px;
+        max-width: 600px;
+      }
+
+      label {
+        margin-right: 10px;
+      }
+
+      input {
+        padding: 5px;
+      }
+
+      input[type='text'] {
+        width: 220px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h2>API Project: URL Shortener Microservice</h2>
+      <span>A freeCodeCamp api and microservices certification project</span>
+      <form action="api/shorturl/new" method="POST">
+        <label for="url_input">URL to be shortened</label>
+        <input
+          id="url_input"
+          type="text"
+          name="url"
+          value="https://www.freecodecamp.org"
+        />
+        <input type="submit" value="POST URL" />
+      </form>
+      <h3>Example Usage:</h3>
+      <a href="https://adaptable-kitty.glitch.me/api/shorturl/3">
+        [this_project_url]/api/shorturl/3
+      </a>
+      <h3>Will Redirect to:</h3>
+      <p>https://www.freecodecamp.org/forum/</p>
+    </div>
+    <div class="footer">
+      <p>by <a href="https://github.com/CoderPrans">CoderPrans</a></p>
+    </div>
+  </body>
+</html>
