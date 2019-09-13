@@ -31,8 +31,9 @@
           <div class="wind">
             <!-- precipitation, wind and pressure -->
             <div id="locHumidity"></div>
-            <div id="locPpt"></div>
+            <div id="locClouds"></div>
             <div id="locWind"></div>
+            <div id="locPpt"></div>
           </div>
         </div>
         <div class="forecast"></div>
@@ -59,6 +60,7 @@
         var lat;
         var lon;
         var url;
+        var forecastUrl;
 
         function getLocation() {
           if (navigator.geolocation) {
@@ -67,64 +69,65 @@
             x.innerHTML = 'Geolocation is not supported by this browser.';
           }
         }
+
+          function c2f(temp_c) {
+            let f = temp_c * 1.8 + 32;
+            return f.toString().slice(0, 5);
+          }
         function showPosition(position) {
           lat = position.coords.latitude;
           lon = position.coords.longitude;
-          url = `https://api.apixu.com/v1/forecast.json?key=99c44b3c984944a0b00190835171402&q=${lat},${lon}&days=7`;
+          url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=05e56fb34aa8790ce974f0e8207e0e28`
+                //`http://api.weatherstack.com/current?access_key=393e0cc454a538519d043b5cdb676495&query=${lat},${lon}`; 
+                //`https://api.apixu.com/v1/forecast.json?key=99c44b3c984944a0b00190835171402&q=${lat},${lon}&days=7`;
+            forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=05e56fb34aa8790ce974f0e8207e0e28`
 
           $.getJSON(url, function(data) {
             console.log(data);
             $('#locName').html(`
-                ${data.location.name}, ${data.location.region}
+                ${data.name}, ${data.sys.country}
             `);
             $('#localTime').html(`
-                ${data.location.localtime.split(' ')[1]}
-                , &nbsp;
-                ${data.location.localtime.split(' ')[0]}
+            ${Date(data.dt*1000).slice(0, 21)}
             `);
             $('#locTemp-c').html(
               `<div class="mag"> 
-                ${data.current.temp_c}</div> 
+                ${data.main.temp.toString().slice(0, 5)}</div> 
                 <div class="notation"> &#8451 </div>`,
             );
             $('#locTemp-f').html(
-              `<div class="mag"> ${data.current.temp_f}</div>
+              `<div class="mag"> ${c2f(data.main.temp)}</div>
                 <div class="notation"> &#8457 </div>`,
             );
             $('#locTemp-f').hide();
             $('#conditionText').html(`
-                ${data.current.condition.text}
+                ${data.weather[0].main},
                 &nbsp;
-                ${data.current.is_day ? 'Day' : 'Night'}`);
+                ${data.weather[0].description}`);
             var img = $('<img id="dynamic">');
-            img.attr('src', `https:${data.current.condition.icon}`);
+              img.attr('src', `http://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
             img.appendTo('#imagediv');
             $('#locWind').html(
               `Wind : &nbsp;<b>${
-                data.current.wind_kph
-              }</b> <em>km/h</em> &nbsp; <b>${data.current.wind_dir}</b>`,
+                data.wind.speed
+              }</b> <em>m/s</em> &nbsp; <b>${data.wind.deg}</b>`,
             );
-            $('#locPpt').html(
-              `Precipitation : &nbsp; ${data.current.precip_mm} <em>mm</em>`,
-            );
+          if(data.rain){
+              if(data.rain['1h']) {
+                $('#locPpt').html(
+                  `Rain in 1 hr : &nbsp; ${data.rain['1h']} <em>mm</em>`,
+                );
+              } else if (data.rain['3h']) {
+                $('#locPpt').html(
+                  `Rain in 3 hrs : &nbsp; ${data.rain['3h']} <em>mm</em>`,
+                );
+              }
+            }
+              $('#locClouds').html(`Cloudiness : ${data.clouds.all} %`)
             $('#locHumidity').html(
-              `Humdity : &nbsp; ${data.current.humidity} <em>%</em>`,
+              `Humdity : &nbsp; ${data.main.humidity} <em>%</em>`,
             );
-            var months = [
-              'Jan',
-              'Feb',
-              'Mar',
-              'Apr',
-              'May',
-              'Jun',
-              'Jul',
-              'Aug',
-              'Sep',
-              'Oct',
-              'Nov',
-              'Dec',
-            ];
-            data.forecast.forecastday.forEach(arr => {
+/*            data.forecast.forecastday.forEach(arr => {
               var daycast = $(`<div>
                                 <h4>${arr.date.slice(8)} ${
                 months[parseInt(arr.date.slice(5, 7)) - 1]
@@ -137,8 +140,24 @@
                   } <span style="font-size: 17px;">&#8451</span></span>
                             </div>`);
               $('.forecast').append(daycast);
-            });
+            });*/
           });
+
+        $.getJSON(forecastUrl, function(data){
+            console.log(data);
+            data.list.forEach(function(obj, ind){
+                let dt = new Date(obj.dt*1000).toString().slice(0, 21).split(' ');
+
+              var daycast = $(`<div>
+                                <h4>${dt[1]} ${dt[2]} ${dt[4]}</h4><br /> 
+                                <img src=http://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png><br />
+                  <span>${
+                  obj.main.temp
+                  } <span style="font-size: 17px;">&#8451</span></span>
+                            </div>`);
+              $('.forecast').append(daycast);
+            })
+        })
         }
 
         function showPopup() {

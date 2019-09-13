@@ -18,18 +18,18 @@ h4 {
   margin: 30px 0;
 }
 .mag {
-  font-size: 80px;
+  font-size: 70px;
 }
 .notation {
   font-size: 30px;
 }
 @media screen and (min-width: 1200px) {
-  .bottom-flexbox {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    width: 65vw;
-  }
+  /* .bottom-flexbox { */
+  /*   display: flex; */
+  /*   align-items: center; */
+  /*   justify-content: space-between; */
+  /*   width: 65vw; */
+  /* } */
   #content {
     width: 700px !important;
     margin: 80px auto !important;
@@ -58,7 +58,7 @@ h4 {
   font-size: 21px;
   opacity: 0.8;
   line-height: 1.4;
-  width: 220px;
+  /*width: 220px; */
   margin: 10px auto;
 }
 #locName {
