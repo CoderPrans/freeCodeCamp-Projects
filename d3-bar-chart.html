@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <meta charset="UTF-8">
+    <title>D3 Bar Chart</title>
+</head>
+<body>
+ <h1 id="title">US GDP Chart</h1>
+ <div class="visual">
+ </div>
+<script src="https://d3js.org/d3.v5.min.js"></script>    
+<script>
+    let url = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json";
+    let svgW = 825;
+    let svgH = 380;
+    let dataset = []
+    const svg = d3.select("div")
+                .attr("id", "canvas")
+                .append("svg")
+                .attr("width", svgW)
+                .attr("height", svgH)
+    d3.json(url)
+        .then(res => {
+            console.log(res.data)
+            svg.selectAll("rect")
+               .data(res.data)
+               .enter()
+               .append("rect")
+               .attr("x", (d,i) => {
+                  return i*3; 
+               })
+              .attr("y", d => svgH - d[1]*0.02)
+              .attr("width", 2)
+              .attr("height", d => d[1] * 0.05)
+              .attr("fill", "orangered")
+        })
+        .catch(err => console.log(err));
+</script>
+</body>
+</html>
