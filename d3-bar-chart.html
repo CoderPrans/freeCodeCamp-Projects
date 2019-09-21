@@ -1,44 +1,62 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang='en'>
 <head>
     <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+      name='viewport'
+      content='width=device-width, initial-scale=1, shrink-to-fit=no'
     />
-    <meta charset="UTF-8">
+    <meta charset='UTF-8'>
     <title>D3 Bar Chart</title>
+    <style>
+    #chart {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    svg {
+        background: coral;
+    }
+    rect:nth-child(odd) {
+        opacity: 0.7;
+    }
+    </style>
 </head>
 <body>
- <h1 id="title">US GDP Chart</h1>
- <div class="visual">
- </div>
-<script src="https://d3js.org/d3.v5.min.js"></script>    
+ <h1 id='title'>US GDP Chart</h1>
+ <div id='chart' /> 
+<script src='https://d3js.org/d3.v5.min.js'></script>    
 <script>
-    let url = "https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json";
-    let svgW = 825;
-    let svgH = 380;
-    let dataset = []
-    const svg = d3.select("div")
-                .attr("id", "canvas")
-                .append("svg")
-                .attr("width", svgW)
-                .attr("height", svgH)
+
+    let url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json';
+    
+    let data = {}
+    let padding = 20;
+
     d3.json(url)
         .then(res => {
-            console.log(res.data)
-            svg.selectAll("rect")
-               .data(res.data)
-               .enter()
-               .append("rect")
-               .attr("x", (d,i) => {
-                  return i*3; 
-               })
-              .attr("y", d => svgH - d[1]*0.02)
-              .attr("width", 2)
-              .attr("height", d => d[1] * 0.05)
-              .attr("fill", "orangered")
+            data.set = [...res.data]
+            data.height = d3.max(data.set.map(d => d[1])) * 0.05;
+            data.width = data.set.length*4;
+            console.log(data)
+            // TODO: work with data
+        
+            d3.select('#chart').append('svg')
+            // svg attributes
+                .attr('width', data.width + 2*padding)
+                .attr('height', data.height + 2*padding)
+                .style('background', '#fafafa')
+            // bar attributes
+                .selectAll('rect')
+                    .data(data.set)
+                    .enter().append('rect')
+                    .style('fill', 'lightgreen')
+                    .attr('width', 4)
+                    .attr('height', d => d[1]*0.05)
+                    .attr('x', (_, i) => i*4+padding)
+                    .attr('y', d => data.height+padding - d[1]*0.05)
         })
         .catch(err => console.log(err));
+    
 </script>
 </body>
 </html>
