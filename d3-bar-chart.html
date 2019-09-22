@@ -8,6 +8,9 @@
     <meta charset='UTF-8'>
     <title>D3 Bar Chart</title>
     <style>
+    body {
+        text-align: center;
+    }
     #chart {
         display: flex;
         justify-content: center;
@@ -30,30 +33,48 @@
     let url = 'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json';
     
     let data = {}
-    let padding = 20;
+    let padding = 60;
 
     d3.json(url)
         .then(res => {
             data.set = [...res.data]
-            data.height = d3.max(data.set.map(d => d[1])) * 0.05;
+            data.height = d3.max(data.set.map(d => d[1])) * 0.03;
             data.width = data.set.length*4;
             console.log(data)
-            // TODO: work with data
+            // TODO: scales 
+
+          //  let xScale = d3.scaleLinear()
+          //  .domain([0, d3.max(data.set, d => d[0])])
+          //  .range([padding, data.width - padding])
+
+            let yScale = d3.scaleLinear()
+              .domain([0, d3.max(data.set, d => d[1])])
+              .range([data.height+padding, padding])
+
+            console.log(d3.max(data.set, d => d[0]));
+
+            let yAxis = d3.axisLeft(yScale);
         
-            d3.select('#chart').append('svg')
-            // svg attributes
-                .attr('width', data.width + 2*padding)
-                .attr('height', data.height + 2*padding)
-                .style('background', '#fafafa')
-            // bar attributes
-                .selectAll('rect')
-                    .data(data.set)
-                    .enter().append('rect')
-                    .style('fill', 'lightgreen')
-                    .attr('width', 4)
-                    .attr('height', d => d[1]*0.05)
-                    .attr('x', (_, i) => i*4+padding)
-                    .attr('y', d => data.height+padding - d[1]*0.05)
+            let svg = d3.select('#chart').append('svg')
+                    // svg attributes
+                        .attr('width', data.width + 2*padding)
+                        .attr('height', data.height + 2*padding)
+                        .style('background', '#fafafa')
+                // bar attributes
+                svg.selectAll('rect')
+                        .data(data.set)
+                        .enter().append('rect')
+                        .style('fill', 'lightgreen')
+                        .attr('width', 4)
+                        .attr('height', d => d[1]*0.03)
+                        .attr('x', (_, i) => i*4+padding)
+                        //.attr('x', d => xScale(d[0] + 4))
+                        //.attr('y', d => data.height+padding - d[1]*0.05)
+                        .attr('y', d => yScale(d[1]))
+                // y Axis
+                svg.append('g')
+                        .attr('transform', `translate(${padding}, 0)`)
+                        .call(yAxis)
         })
         .catch(err => console.log(err));
     
