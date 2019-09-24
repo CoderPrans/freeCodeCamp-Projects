@@ -18,8 +18,18 @@
         border: 1px solid lightblue;
         min-width: 1222px;
     }
+    rect {
+        fill: lightgreen;
+    }
+    rect:hover {
+        width: 9;
+        fill: yellow;
+    }
     rect:nth-child(even) {
         opacity: 0.7;
+    }
+    text {
+        font-size: 14px;
     }
     </style>
 </head>
@@ -66,7 +76,7 @@
                 svg.selectAll('rect')
                         .data(data.set)
                         .enter().append('rect')
-                        .style('fill', 'lightgreen')
+                        //.style('fill', 'lightgreen')
                         .attr('width', 4)
                         .attr('height', d => d[1]*0.03)
                         .attr('x', (_, i) => i*4+padding)
