@@ -8,36 +8,7 @@
   <meta name="theme-color" content="#42475E">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>pomodoro timer</title>
-</head>
-<body>
-  <audio id="timer-bling" src="timer-bling.flac" preload="auto"></audio>
-  <header class="title">Pomodoro Timer</header>
-  <div class="lengths">
-    <div id="btnsB">
-      <h4>BREAK LENGTH</h4>
-      <button id="minusB">-</button>
-      <span class="B">5</span>
-      <button id="plusB">+</button>
-    </div>
-    <div id="btnsT">
-      <h4>SESSION LENGTH</h4>
-      <button id="minusT">-</button>
-      <span class="T">25</span>
-      <button id="plusT">+</button>
-    </div>
-    </div>
-      <div class="timer">
-          <b>SESSION  #</b>1<br /><br /><p>25:00</p>
-      </div>
-      <button id="reset">
-      RESET
-    </button>
-    <div class="pomodoro">
 
-    </div>
-  <footer>
-  coded by <a href="#">Pranav Bhaskar</a>
-  </footer>
  <style>
  body{
  font-family: 'Oxygen', sans-serif;
@@ -76,7 +47,6 @@
  display: inline-block;
  background-color: transparent;
 }
-
 .timer {
  width: 10em;
  outline: 0;
@@ -118,7 +88,6 @@ a {
  text-align: justify;
  border-style: inset;
 }
-
 #reset{
  color: lightgoldenrodyellow;
  font-size: 2em;
@@ -142,12 +111,43 @@ footer a {
  color: tomato;
 }
  </style>
+</head>
+<body>
+  <audio id="timer-bling" src="timer-bling.flac" preload="auto"></audio>
+  <header class="title">Pomodoro Timer</header>
+  <div class="lengths">
+    <div id="btnsB">
+      <h4>BREAK LENGTH</h4>
+      <button id="minusB">-</button>
+      <span class="B">5</span>
+      <button id="plusB">+</button>
+    </div>
+    <div id="btnsT">
+      <h4>SESSION LENGTH</h4>
+      <button id="minusT">-</button>
+      <span class="T">25</span>
+      <button id="plusT">+</button>
+    </div>
+    </div>
+      <div class="timer">
+          <b>SESSION  #</b>1<br /><br /><p>25:00</p>
+      </div>
+      <button id="reset">
+      RESET
+    </button>
+    <div class="pomodoro">
+
+    </div>
+  <footer>
+  coded by <a href="#">Pranav Bhaskar</a>
+  </footer>
+
   <script
     src="https://code.jquery.com/jquery-3.3.1.min.js"
     integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
     crossorigin="anonymous"></script>
   <script type="text/javascript">
-  var Tcounter = 0;
+var Tcounter = 0;
 var Bcounter = 0;
 var sessions = 1;
 var timeleft = 1500;
@@ -179,12 +179,14 @@ if (!myInterval) {
    myInterval = setInterval(timeIt, 1000);
    $(".lengths").fadeOut();
    $("#reset").fadeOut();
+   displayNotification(`timer running!`)
 }
 else {
   $(".lengths").fadeIn();
   $("#reset").fadeIn();
   clearInterval(myInterval);
   myInterval = false;
+  displayNotification(`timer stopped!`)
 }
 });
 
@@ -258,10 +260,19 @@ if(!myInterval){
   $(".pomodoro").text(" ");
 }
 });
+
+Notification.requestPermission(status => console.log("Notification permission status " + status))
  
-    if ('serviceWorker' in navigator) {
-					navigator.serviceWorker.register('sw.js');
-				} 
+if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js');
+} 
+
+function displayNotification(mssg) {
+  if(Notification.permission == 'granted') {
+      navigator.serviceWorker.getRegistration().then(reg => reg.showNotification(`${mssg}`))
+  }
+}
+
   </script>
 </body>
 </html>
