@@ -1,0 +1,24 @@
+body {
+    text-align: center;
+}
+#chart {
+    overflow: auto;
+}
+svg {
+    border: 1px solid lightblue;
+    min-width: 1222px;
+}
+rect {
+    fill: lightgreen;
+}
+rect:hover {
+    width: 9;
+    fill: yellow;
+}
+rect:nth-child(even) {
+    opacity: 0.7;
+}
+text {
+    font-size: 14px;
+}
+
