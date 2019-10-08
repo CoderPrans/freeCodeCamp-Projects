@@ -56,11 +56,31 @@ d3.json(url)
           .attr('transform', `translate(0, ${data.height + padding})`)
           .call(xAxis)
 
+      // tooltip
+      let tooltip = svg.append('g')
+              .attr('class', 'tooltip')
+              // .attr('height', '180')
+              // .attr('width', '250')
+              // .attr('x', 90)
+              // .attr('y', 50)
+
     let rects = document.getElementsByTagName('rect')
     Array.from(rects)
       .forEach(rect => {
         rect.onmouseover = () => {
-          console.log(`${rect.getAttribute('data-date')}, ${rect.getAttribute('data-gdp')}`)
+          let date = rect.getAttribute('data-date'),
+              gdp = rect.getAttribute('data-gdp')
+          tooltip.selectAll('text').remove()
+          tooltip.append('text')
+                  .attr('class', 'bar-date')
+                  .attr('x', 160)
+                  .attr('y', 100)
+                  .text(`${date}`)
+          tooltip.append('text')
+                  .attr('class', 'bar-gdp')
+                  .attr('x', 160)
+                  .attr('y', 140)
+                  .text(`$${gdp} Bn`)
         }
       })
 
