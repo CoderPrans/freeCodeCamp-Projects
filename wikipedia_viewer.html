@@ -10,89 +10,64 @@
 </head>
 <body>
   <div class="container-fluid">
-  <div class="row">
-    <div class="col-lg-4 col-md-6 col-sm-12 col-xs-12">
-<a href="https://en.wikipedia.org/wiki/Special:Random" target="blank"><img class="img-fluid img-center " src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1122px-Wikipedia-logo-v2.svg.png" width="170px"></a></div>
+<a href="https://en.wikipedia.org/wiki/Special:Random" target="blank">
+    <img class="img-fluid img-center logo" title="random wiki" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1122px-Wikipedia-logo-v2.svg.png" width="170px">
+</a>
 <!--  <h1 class="header text-center">Wikipedia Viewer</h1> -->
-<div class="col-lg-8 col-md-8 col-sm-12 col-xs-12">
 <span>
 <input id="inputText" type="text" placeholder=" Search Wikipedia" value="" autofocus="autofocus" />
-<button id="search"><i class="fa fa-search"></i></button><a href="https://en.wikipedia.org/wiki/Special:Random" target="blank" class="random text-center">random</a>
-      </div></span></div>
+<button id="search"><i class="fa fa-search"></i></button> 
+</span>  
+
+<div class="options">
+    <div class="result" style="background: orange">
+  <li class="remove_me">
+      type something in the box above and press "Enter" or click the <i class="fa fa-search"></i>
+  </li>
+  </div>
+  <ul id="output">
+  </ul>
 </div>
 
-    </div>
-  <div class="options">
-    <ul id="output">
-  </ul>
-   </div>
-    </>
-  <footer class="pull-right">by <b>Pranav Bhaskar</b> &copy; 2017</footer>
-  </div>
+  <footer class="pull-right">by <b>CoderPrans</b></footer>
+</div>
   <style>
-  body{
-background-color:  darkslategrey;
-/*   width: 100%; */
-/*   margin-top: 0; */
+body {
+background-color:  #ddd;
 }
-.content{
-/*   margin-top: 17%; */
-}
-.random{
-font-size: 19px;
-/*   float: left; */
-background-color: silver;
-color:  darkslategrey;
-padding: 5px 10px;
-margin: 25px;
-border-radius: 3px;
-opacity: 0.5;
-}
-.randon a {
-text-decoration: none;
-}
-.random a:hover {
-text-decoration: none;
-}
-
-.random:hover {
-opacity: 1;
-}
-/* span {
-display: inline-block;
-} */
-input{
-width: 50%;
+input {
+width: 60%;
 margin: 25px 0 25px 45px;
+border:none;
+padding: 5px;
+background: #eee;
 border-radius: 5px;
 }
 #search {
-border-style:offset;
-background-color: white;
+padding: 5px;
+border: none;
 border-radius: 5px;
+cursor: pointer;
 }
-
-.header{
+.header {
 margin: 40px;
 color: #060628;
 font-family: 'Times New Roman';
 font-weight: bold;
 text-align: left;
 }
-.result{
-background-color:  #e3e1f1 ;
+.result {
+background-color:  #fff;
 border: 12px;
 border-radius: 5px;
 padding: 5px;
 margin: 15px;
-width: 100%;
 opacity: 0.8;
 }
 .result:hover {
 opacity: 1;
 }
-ul
-{
+ul {
 list-style-type: none;
 padding: 25px;
 margin: 1%;
@@ -105,18 +80,16 @@ color: black;
 text-decoration: none;
 font-family: sans-serif;
 }
-
-a:hover
-{
+a:hover {
 text-decoration:none;
 cursor:pointer;
 }
-.head{
+.head {
 font-family: Times;
 }
-.logo{
+.logo {
 width: 10em;
-margin:2%;
+margin: 3% 0;
 }
 footer {
 margin: 1%;
@@ -134,7 +107,8 @@ margin: 1%;
 var searchTerm;
 var list;
 
-   $("#search").click(function(){
+$("#search").click(function(){
+    if ($("#inputText").val().length > 0) {
 searchTerm = $("#inputText").val();
 
 var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ searchTerm +"&format=json&callback=?";
@@ -151,13 +125,14 @@ var url = "https://en.wikipedia.org/w/api.php?action=opensearch&search="+ search
        }
        $("#inputText").val('');
        $('html,body').animate({
-      scrollTop: $(".options").offset().top},
+      scrollTop: $("#output").offset().top},
       'slow');
      },
      error: function(message){
        alert("can't load")
      }
    })
+    } else { alert('write a key word to search for !!') } 
 // console.log(searchTerm);
  });
   $("#inputText").keypress(function(x){

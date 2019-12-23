@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.6/css/bootstrap.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Wikipedia Viewer</title>
+</head>
+<body>
+<div class="container-fluid">
+<a href="https://en.wikipedia.org/wiki/Special:Random" target="blank">
+    <img class="img-fluid img-center logo" title="random wiki" src="https://upload.wikimedia.org/wikipedia/en/thumb/8/80/Wikipedia-logo-v2.svg/1122px-Wikipedia-logo-v2.svg.png" width="170px">
+</a>
+<span>
+<input id="inputText" type="text" placeholder=" Search Wikipedia" value="" autofocus="autofocus" />
+<button id="search"><i class="fa fa-search"></i></button> 
+</span>  
+
+<div class="options">
+<div class="result" style="background: orange">
+<li class="remove_me">
+   type something in the box above and press "Enter" or click the <i class="fa fa-search"></i>
+</li>
+</div>
+<ul id="output">
+</ul>
+</div>
+<footer class="pull-right">by <b>CoderPrans</b></footer>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+<script
+    src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+    crossorigin="anonymous">
+</script>
+<script src="main.js"></script>
+</body>
+</html>
