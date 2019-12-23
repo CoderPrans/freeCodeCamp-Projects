@@ -1,2 +1,2 @@
-# freeCodeCamp-Projects
-Posting all my freeCodeCamp projects on github 
+# FreeCodeCamp Projects
+Posting all my freeCodeCamp certification projects on github 
