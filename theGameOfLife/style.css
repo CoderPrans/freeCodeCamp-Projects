@@ -1,0 +1,40 @@
+body {
+  background: #009999;
+  margin: 0;
+  color: #222;
+}
+#root {
+  text-align: center;
+}
+.box {
+  background: lightgrey;
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  border: 1px solid darkgrey;
+  margin-left: -1px;
+  margin-bottom: -1px;
+}
+.box-dead:hover {
+  background: green;
+}
+.grid {
+  line-height: 0;
+  margin: auto;
+}
+.box-alive {
+  background: #111;
+}
+button {
+  margin: 10px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #222;
+} 
+.rules {
+  background: #ccdd00;
+  color: #222;
+  border-color: white;
+}
