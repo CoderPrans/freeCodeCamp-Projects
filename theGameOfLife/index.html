@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- <link -->
+    <!--   rel="canonical" -->
+    <!-- /> -->
+    <!-- <link rel="manifest" href="manifest.json" /> -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8">
+    <title>the Game of Life</title>
+<style>
+body {
+  background: #009999;
+  margin: 0;
+  color: #222;
+}
+#root {
+  text-align: center;
+}
+.box {
+  background: lightgrey;
+  height: 15px;
+  width: 15px;
+  display: inline-block;
+  border: 1px solid darkgrey;
+  margin-left: -1px;
+  margin-bottom: -1px;
+}
+.box-dead:hover {
+  background: green;
+}
+.grid {
+  line-height: 0;
+  margin: auto;
+}
+.box-alive {
+  background: #111;
+}
+button {
+  margin: 15px;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  color: #222;
+} 
+.rules {
+  background: #ccdd00;
+  color: #222;
+  border-color: white;
+}
+</style>
+</head>
+<body>
+
+<!-- root -->
+<div id="root"></div>
+<p style="text-align: center">by <b>CoderPrans</b></p> 
+<!-- libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+
+<script type="text/babel">
+
+    class Box extends React.Component {
+      constructor(props){
+        super(props);
+        this.selectBox = this.selectBox.bind(this);
+      }
+      
+      selectBox(){
+        this.props.selectBox(this.props.row, this.props.col)
+        console.log(this.props.row)
+        console.log(this.props.col)
+      }
+      
+      render() {
+        // let classN = 'box ' + this.props.status
+        let classN = this.props.status ? "box box-alive" : "box box-dead"
+        // console.log(this.props.status)
+        return(
+          <div className={classN} onClick={this.selectBox}></div>
+        );
+      }
+    }
+
+    class Controls extends React.Component {
+      constructor(props){
+        super(props);
+        this.rules = this.rules.bind(this);
+      }
+      
+      rules(){
+        alert("Here are the rules:")
+        alert("1. Any live cell with fewer than two live neighbors dies, as if caused by under population.")
+        alert("2. Any live cell with two or three live neighbors lives on to the next generation.")
+        alert("3. Any live cell with more than three live neighbors dies, as if by overpopulation.")
+        alert("4. Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.")
+      }
+      
+      render() {
+        return(
+          <div>
+            <button onClick={this.props.seed} >SEED</button>
+             <button onClick={this.props.playButton}>PLAY</button>
+             <button onClick={this.props.pauseButton}>PAUSE</button>
+             <button onClick={this.props.clearGrid}>CLEAR</button>
+             <button onClick={this.rules} className="rules">!!!</button>
+          </div>
+        );
+      }
+    }
+
+    class Grid extends React.Component {
+      render() {
+        let boxes = []
+        let width = this.props.cols * 16
+        // for(let j = 0; j < 1032; j++){
+        //   boxes.push(<Box />)
+        //  }
+        let status = ''
+        const rows = this.props.rows
+        const cols = this.props.cols
+        for(let j = 0; j < rows; j++){
+          for(let k = 0; k < cols; k++){
+             // status = this.props.grid[j][k] ? "box-alive" : "box-dead"
+            // if(this.props.grid[j][k] === 1){
+            //   status = "box-alive"
+            //   console.log("i am alive")
+            // } else { status = "box-dead" }
+            boxes.push(<Box status={this.props.grid[j][k]} key={j + '_' + k} row={j} col={k} selectBox={this.props.selectBox}/>)
+          }
+        }
+        return(
+          <div className="grid" style={{width: width}}>
+            {boxes}
+          </div>    
+        );
+      }
+    }
+
+    class Game extends React.Component {
+      constructor(props){
+        super(props);
+        this.speed = 10
+        this.rows = 40
+        this.cols = 50
+        this.state = {
+          generations: 0,
+          grid: Array(this.rows).fill(Array(this.cols).fill(0)),
+        }
+        this.seed = this.seed.bind(this);
+        this.play = this.play.bind(this);
+        this.playButton = this.playButton.bind(this);
+        this.selectBox = this.selectBox.bind(this);
+        this.pauseButton = this.pauseButton.bind(this);
+        this.clearGrid = this.clearGrid.bind(this);
+      }
+      
+      componentDidMount(){
+        this.seed()
+        this.playButton()
+      }
+      
+      selectBox(x, y){
+        let gridCopy = JSON.parse(JSON.stringify(this.state.grid))
+        console.log(gridCopy)
+        console.log(x)
+        console.log(y)
+        gridCopy[x][y] = gridCopy[x][y] ? 0 : 1
+        this.setState({
+          grid: gridCopy
+        })
+      }
+      
+      seed() {
+        let gridRandom = []
+        let rows = this.rows
+        let cols = this.cols
+        
+        for(let j = 0; j < rows; j++){
+          gridRandom[j] = Array(cols)
+          for(let k = 0; k < cols; k++){
+             gridRandom[j][k] = Math.floor(Math.random()*4) === 1 ? 1 : 0 
+          }
+        }
+        
+        this.setState({
+          grid: gridRandom
+        })
+      }
+      
+      playButton() {
+        clearInterval(this.frameChange)
+        this.frameChange = setInterval( this.play, this.speed)
+      }
+      
+      pauseButton() {
+        clearInterval(this.frameChange)
+      }
+      
+      clearGrid() {
+        let toClear = JSON.parse(JSON.stringify(this.state.grid))
+        for(let i = 0; i < this.rows; i++){
+          for(let j = 0; j < this.cols; j++){
+            toClear[i][j] = 0;
+          }
+        }
+        this.setState({
+          grid: toClear,
+          generations: 0
+        })
+        clearInterval(this.frameChange)
+      }
+      
+      play() {
+        let grid = this.state.grid
+        let rows = this.rows
+        let cols = this.cols
+        let nextGrid = JSON.parse(JSON.stringify(this.state.grid))
+
+        
+        for(let i = 0; i < rows; i++){
+          for(let j = 0; j < cols; j++){
+            let neighbours = countNeighbours(grid, i, j)
+            if(grid[i][j] == 0 && neighbours == 3){
+              nextGrid[i][j] = 1
+            } 
+            else if(grid[i][j] == 1 && neighbours >= 4 || grid[i][j] == 1 && neighbours <= 1){
+              nextGrid[i][j] = 0
+            }
+            else { nextGrid[i][j] == grid[i][j] }
+          }
+        }
+        
+        function countNeighbours(grid, x, y){
+          let sum = 0
+          for(let i = -1; i < 2; i++){
+            for(let j = -1; j < 2; j++){
+              let row = (x+i+rows) % rows
+              let col = (y+j+cols) % cols
+              sum += grid[row][col]
+            }
+          }
+          sum -= grid[x][y]
+          return sum;
+        }
+        
+        this.setState({
+          grid: nextGrid,
+          generations: this.state.generations + 1
+        })
+      }
+      
+      render() {
+         return(
+           <div>
+        <h1>the Game of Life</h1>
+             <h3>Generations: {this.state.generations}</h3>
+             <Controls seed={this.seed} pauseButton={this.pauseButton} playButton={this.playButton} clearGrid={this.clearGrid}/>
+             
+        <Grid rows={this.rows} cols={this.cols} grid={this.state.grid} selectBox={this.selectBox}/>
+             
+           </div>
+      );
+      }
+    }
+
+    ReactDOM.render(<Game/>, document.getElementById("root"));
+</script>
+</body>
+</html>
