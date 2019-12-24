@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta charset="UTF-8"> <title>Recipe Box</title> </head>
+<body>
+
+<!-- root -->
+<div id="root"></div>
+<footer style="text-align: center">by <b>CoderPrans</b></footer> 
+
+<!-- libraries -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.2.0/umd/react.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.2.0/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/6.21.1/babel.min.js"></script>
+
+<!-- react -->
+<script type="text/babel">
+// the add recipe form
+class NewItem extends React.Component {
+  constructor(props){
+    super(props);
+    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleCancel = this.handleCancel.bind(this);
+  }
+// send submitted data to recipebox
+  handleSubmit(){
+    const newName = document.querySelector(".newName").value
+    const newIngredients = document.querySelector(".newIngredients").value
+    if(newName.length && newIngredients.length){
+          const toAdd = newName + '&' + newIngredients
+          this.props.add(toAdd, "add")
+          document.querySelector('.addItem').classList.remove('expand')
+          document.querySelector('.recipes-list').classList.remove('hidden')
+          document.querySelector(".add-button").classList.remove("hidden")
+    } else {
+      alert("please type something to submit!!")
+    }
+
+  }
+  handleCancel(){
+    document.querySelector(".newName").value = ''
+    document.querySelector(".newIngredients").value = ''
+    document.querySelector('.addItem').classList.remove('expand')
+    document.querySelector('.recipes-list').classList.remove('hidden')
+    document.querySelector(".add-button").classList.remove("hidden")
+  }
+  // empty input areas when component updates
+  componentDidUpdate() {
+    document.querySelector(".newName").value = ''
+    document.querySelector(".newIngredients").value = ''
+  }
+  
+  render() {
+    return(
+      <div className="addItem">
+        <p>Recipe</p>
+        <input className="newName" type='text' placeholder="recipe name.." />
+        <p>Ingredients</p>
+        <textarea className="newIngredients" placeholder="ingredient1, ingredient2..." rows="5" cols="30"/>
+        <br />
+        <button onClick={this.handleSubmit}>Submit</button>
+        <button onClick={this.handleCancel}>Cancel</button>
+      </div>
+    );
+  }
+}
+// box to display contents
+class Box extends React.Component {
+  constructor(props){
+    super(props)
+    this.recipeClick = this.recipeClick.bind(this)
+  }
+  // to hide and show the ingredients on click
+  recipeClick(e){
+    let ingredients = e.target.children[0]
+    ingredients
+      ? ingredients.style.display != "block"
+        ? ingredients.style.display = "block"
+        : ingredients.style.display = "none"
+      : null
+  }
+  render() {
+    return (
+      <ul className="recipes-list">
+        {this.props.items.map((item, j) => 
+             <li className={"recipe-"+j} key={"recipe-key-"+item.name} onClick={e => this.recipeClick(e)}>{item.name}
+             <ul className="ingredients">{ item.ingredients.split(',').map((ing, k) => <li key={"ing-key-"+ing}>{ing}</li>) }
+             <button className="delete" onClick={() => this.props.change(item, "delete")}><i class="fa fa-trash"></i></button>
+             <button className="edit" onClick={() => this.props.change(item, "edit")}><i class="fa fa-edit"></i></button> </ul>
+             </li>)
+        }</ul>
+    );
+  }
+}
+
+// main parent component
+class RecipeBox extends React.Component {
+  constructor(props){
+    super(props);
+    this.state = {
+      items : [{
+        name: "Cola",
+        ingredients: "Sugar, Fuzzy Water, Colors"
+      }, {
+        name: "Cake",
+        ingredients: "Flour, Milk, Eggs, Sugar, Cherry"
+      }]
+    };
+    this.handleClick = this.handleClick.bind(this)
+    this.handleChanges = this.handleChanges.bind(this)
+  }
+  // display form to add new item
+  handleClick() {
+    let add = document.querySelector('.addItem')
+    add.classList.toggle("expand")
+    document.querySelector(".recipes-list").classList.toggle("hidden")
+    document.querySelector(".add-button").classList.add("hidden")
+    
+  }
+  // handle add, delete and edit
+  handleChanges(item, str) {
+    let changedList = null
+    if(str === "add") {
+      let currItems = [...this.state.items]
+      let itemKey = item.slice( 0, item.indexOf('&'))
+      let itemIng = item.slice(item.indexOf("&") + 1)
+      let itemNames = []
+      currItems.forEach(x => itemNames.push(x.name))
+      console.log(itemNames)
+      if(itemNames.indexOf(itemKey) != -1){
+        currItems.splice(itemNames.indexOf(itemKey), 1)
+        changedList = currItems.concat({ name: itemKey, ingredients: itemIng })
+        console.log("here i delete")
+      } else {
+        changedList = currItems.concat({ name: itemKey, ingredients: itemIng })
+      }  
+    } 
+    else if(str === "delete") {
+         changedList = [...this.state.items]
+        for(let k = 0; k < changedList.length; k++){
+          if(item.name === changedList[k].name){
+            changedList.splice(k, 1)
+            console.log('changedList has been altered!!')
+          } else { continue }
+        }
+    }
+    else if(str === "edit"){
+      document.querySelector(".newName").value = item.name
+      document.querySelector(".newIngredients").value = item.ingredients
+      document.querySelector(".addItem").classList.add("expand")
+      document.querySelector(".recipes-list").classList.add("hidden")
+      document.querySelector(".add-button").classList.add("hidden")
+    }
+    console.log(item)
+    console.log(str)
+    console.log(changedList)
+    changedList && this.setState({ items: changedList })
+  }
+  
+// fetch recipes from local storage on mounting
+  
+  componentDidMount() {
+    let recipes = localStorage.getItem("_coderprans_recipes")
+    recipes ? this.setState({ items: JSON.parse(recipes) }) : localStorage.setItem("_coderprans_recipes", JSON.stringify(this.state.items))
+  }
+  
+  // update the local storage every time the state changes(recipe list changes)
+  componentDidUpdate() {
+    localStorage.setItem("_coderprans_recipes", JSON.stringify(this.state.items))
+  }
+  
+  render() {
+    return ( <div>
+        <h1>Recipe Box</h1>
+        <button className="add-button" onClick={this.handleClick}>Add Recipe</button>
+        <NewItem add={this.handleChanges}/>
+        <Box items={this.state.items} change={this.handleChanges}/>
+      </div> );
+  }
+}
+
+ReactDOM.render(<RecipeBox />, document.getElementById('root'));
+</script>
+</body>
+</html>
