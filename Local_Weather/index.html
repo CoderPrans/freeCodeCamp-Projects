@@ -43,6 +43,9 @@
         <span class="copyright"></span>
       </div>
     </div>
+    <!-- Load d3.js -->
+    <script src="https://d3js.org/d3.v4.js"></script>
+    <!-- Load jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
     <script
@@ -52,7 +55,6 @@
     ></script>
     <script>
       $(document).ready(function() {
-        showPopup();
         getLocation();
 
         var x = document.getElementById('demo');
@@ -66,14 +68,22 @@
           if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(showPosition);
           } else {
+            showPopup();
             x.innerHTML = 'Geolocation is not supported by this browser.';
           }
         }
 
-          function c2f(temp_c) {
-            let f = temp_c * 1.8 + 32;
-            return f.toString().slice(0, 5);
-          }
+        function c2f(temp_c) {
+           let f = temp_c * 1.8 + 32;
+           return f.toString().slice(0, 5);
+        }
+
+        function windDir(deg) {
+           let dirs = ["N", "NE", "E", "ES", "S", "SW", "W", "WN"]
+           let index = Math.round(deg / 45)
+           return dirs[index - 1]
+        }
+
         function showPosition(position) {
           lat = position.coords.latitude;
           lon = position.coords.longitude;
@@ -88,7 +98,7 @@
                 ${data.name}, ${data.sys.country}
             `);
             $('#localTime').html(`
-            ${Date(data.dt*1000).slice(0, 21)}
+                ${Date(data.dt*1000).slice(0, 3)}, ${Date(data.dt*1000).slice(16, 21)}
             `);
             $('#locTemp-c').html(
               `<div class="mag"> 
@@ -102,15 +112,14 @@
             $('#locTemp-f').hide();
             $('#conditionText').html(`
                 ${data.weather[0].main},
-                &nbsp;
                 ${data.weather[0].description}`);
             var img = $('<img id="dynamic">');
               img.attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
             img.appendTo('#imagediv');
             $('#locWind').html(
-              `Wind : &nbsp;<b>${
+              `Wind:  <b>${
                 data.wind.speed
-              }</b> <em>m/s</em> &nbsp; <b>${data.wind.deg}</b>`,
+              }</b> <em>m/s</em> &nbsp; <b>${windDir(data.wind.deg)}</b>`,
             );
           if(data.rain){
               if(data.rain['1h']) {
@@ -123,9 +132,9 @@
                 );
               }
             }
-              $('#locClouds').html(`Cloudiness : ${data.clouds.all} %`)
+              $('#locClouds').html(`Cloudiness:  ${data.clouds.all}%`)
             $('#locHumidity').html(
-              `Humdity : &nbsp; ${data.main.humidity} <em>%</em>`,
+              `Humdity:  ${data.main.humidity}<em>%</em>`,
             );
 /*            data.forecast.forecastday.forEach(arr => {
               var daycast = $(`<div>
@@ -140,7 +149,8 @@
                   } <span style="font-size: 17px;">&#8451</span></span>
                             </div>`);
               $('.forecast').append(daycast);
-            });*/
+            });
+*/
           });
 
         $.getJSON(forecastUrl, function(data){
@@ -149,11 +159,9 @@
                 let dt = new Date(obj.dt*1000).toString().slice(0, 21).split(' ');
 
               var daycast = $(`<div>
-                                <h4>${dt[1]} ${dt[2]} ${dt[4]}</h4><br /> 
+                  <span>${obj.main.temp} <span style="font-size: 18px;">&#8451</span></span><br />
                                 <img src=https://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png><br />
-                  <span>${
-                  obj.main.temp
-                  } <span style="font-size: 17px;">&#8451</span></span>
+                                <h4>${dt[0]} ${dt[4]}</h4> 
                             </div>`);
               $('.forecast').append(daycast);
             })

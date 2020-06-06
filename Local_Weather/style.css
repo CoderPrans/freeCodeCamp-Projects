@@ -24,15 +24,14 @@ h4 {
   font-size: 30px;
 }
 @media screen and (min-width: 1200px) {
-  /* .bottom-flexbox { */
-  /*   display: flex; */
-  /*   align-items: center; */
-  /*   justify-content: space-between; */
-  /*   width: 65vw; */
-  /* } */
+  .bottom-flexbox {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
   #content {
-    width: 700px !important;
-    margin: 80px auto !important;
+    min-width: 800px !important;
+    /* margin: 80px auto !important; */
   }
 }
 .forecast {
@@ -88,3 +87,19 @@ h4 {
   margin-top: 150px;
   text-align: center;
 }
+/* /1* width *1/ */
+/* .forecast::-webkit-scrollbar { */
+/*   width: 0; */
+/* } */
+/* /1* Track *1/ */
+/* .forecast::-webkit-scrollbar-track { */
+/*     background: transparent; */ 
+/* } */
+/* /1* Handle *1/ */
+/* .forecast::-webkit-scrollbar-thumb { */
+/*   background: #1c1b25; */ 
+/* } */
+/* /1* Handle on hover *1/ */
+/* .forecast::-webkit-scrollbar-thumb:hover { */
+/*     background: #555; */ 
+/* } */
