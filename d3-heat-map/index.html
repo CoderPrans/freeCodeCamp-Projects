@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>FCC Heat Map</title>
+  </head>
+  <style>
+    svg {
+      background: #fafafa;
+      border: 1px solid #ccc;
+      display: block;
+      margin: 0 auto;
+    }
+    body {
+      font-family: sans-serif;
+    }
+    h1,
+    h3 {
+      text-align: center;
+    }
+    rect:hover {
+      stroke: white;
+      stroke-width: 2;
+    }
+  </style>
+  <body>
+    <h1 id="title">Heat Map</h1>
+    <h3 id="description">1753 - 2015 Land Surface Temperature</h3>
+    <div id="map"></div>
+    <script src="https://d3js.org/d3.v5.min.js"></script>
+    <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>

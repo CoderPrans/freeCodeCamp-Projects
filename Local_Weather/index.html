@@ -74,55 +74,61 @@
         }
 
         function c2f(temp_c) {
-           let f = temp_c * 1.8 + 32;
-           return f.toString().slice(0, 5);
+          let f = temp_c * 1.8 + 32;
+          return f.toString().slice(0, 5);
         }
 
         function windDir(deg) {
-           let dirs = ["N", "NE", "E", "ES", "S", "SW", "W", "WN"]
-           let index = Math.round(deg / 45)
-           return dirs[index - 1]
+          let dirs = ['N', 'NE', 'E', 'ES', 'S', 'SW', 'W', 'WN'];
+          let index = Math.round(deg / 45);
+          return dirs[index - 1];
         }
 
         function showPosition(position) {
           lat = position.coords.latitude;
           lon = position.coords.longitude;
-          url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=05e56fb34aa8790ce974f0e8207e0e28`
-                //`http://api.weatherstack.com/current?access_key=393e0cc454a538519d043b5cdb676495&query=${lat},${lon}`; 
-                //`https://api.apixu.com/v1/forecast.json?key=99c44b3c984944a0b00190835171402&q=${lat},${lon}&days=7`;
-            forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=05e56fb34aa8790ce974f0e8207e0e28`
+          url = `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=05e56fb34aa8790ce974f0e8207e0e28`;
+          //`http://api.weatherstack.com/current?access_key=393e0cc454a538519d043b5cdb676495&query=${lat},${lon}`;
+          //`https://api.apixu.com/v1/forecast.json?key=99c44b3c984944a0b00190835171402&q=${lat},${lon}&days=7`;
+          forecastUrl = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&units=metric&appid=05e56fb34aa8790ce974f0e8207e0e28`;
 
           $.getJSON(url, function(data) {
             console.log(data);
             $('#locName').html(`
-                ${data.name}, ${data.sys.country}
-            `);
+                    ${data.name}, ${data.sys.country}
+                `);
             $('#localTime').html(`
-                ${Date(data.dt*1000).slice(0, 3)}, ${Date(data.dt*1000).slice(16, 21)}
-            `);
+                    ${Date(data.dt * 1000).slice(
+                      0,
+                      3,
+                    )}, ${Date(data.dt * 1000).slice(16, 21)}
+                `);
             $('#locTemp-c').html(
               `<div class="mag"> 
-                ${data.main.temp.toString().slice(0, 5)}</div> 
-                <div class="notation"> &#8451 </div>`,
+                    ${data.main.temp.toString().slice(0, 5)}</div> 
+                    <div class="notation"> &#8451 </div>`,
             );
             $('#locTemp-f').html(
               `<div class="mag"> ${c2f(data.main.temp)}</div>
-                <div class="notation"> &#8457 </div>`,
+                    <div class="notation"> &#8457 </div>`,
             );
             $('#locTemp-f').hide();
             $('#conditionText').html(`
-                ${data.weather[0].main},
-                ${data.weather[0].description}`);
+                    ${data.weather[0].main},
+                    ${data.weather[0].description}`);
             var img = $('<img id="dynamic">');
-              img.attr('src', `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`);
+            img.attr(
+              'src',
+              `https://openweathermap.org/img/wn/${data.weather[0].icon}@2x.png`,
+            );
             img.appendTo('#imagediv');
             $('#locWind').html(
               `Wind:  <b>${
                 data.wind.speed
               }</b> <em>m/s</em> &nbsp; <b>${windDir(data.wind.deg)}</b>`,
             );
-          if(data.rain){
-              if(data.rain['1h']) {
+            if (data.rain) {
+              if (data.rain['1h']) {
                 $('#locPpt').html(
                   `Rain in 1 hr : &nbsp; ${data.rain['1h']} <em>mm</em>`,
                 );
@@ -132,40 +138,41 @@
                 );
               }
             }
-              $('#locClouds').html(`Cloudiness:  ${data.clouds.all}%`)
-            $('#locHumidity').html(
-              `Humdity:  ${data.main.humidity}<em>%</em>`,
-            );
-/*            data.forecast.forecastday.forEach(arr => {
-              var daycast = $(`<div>
-                                <h4>${arr.date.slice(8)} ${
-                months[parseInt(arr.date.slice(5, 7)) - 1]
-              }</h4><br /> 
-                                <img src="https://${
-                                  arr.day.condition.icon
-                                }"><br />
-                  <span>${
-                    arr.day.maxtemp_c
-                  } <span style="font-size: 17px;">&#8451</span></span>
-                            </div>`);
-              $('.forecast').append(daycast);
-            });
-*/
+            $('#locClouds').html(`Cloudiness:  ${data.clouds.all}%`);
+            $('#locHumidity').html(`Humdity:  ${data.main.humidity}<em>%</em>`);
+            /*            data.forecast.forecastday.forEach(arr => {
+                  var daycast = $(`<div>
+                                    <h4>${arr.date.slice(8)} ${
+                    months[parseInt(arr.date.slice(5, 7)) - 1]
+                  }</h4><br /> 
+                                    <img src="https://${
+                                      arr.day.condition.icon
+                                    }"><br />
+                      <span>${
+                        arr.day.maxtemp_c
+                      } <span style="font-size: 17px;">&#8451</span></span>
+                                </div>`);
+                  $('.forecast').append(daycast);
+                });
+    */
           });
 
-        $.getJSON(forecastUrl, function(data){
+          $.getJSON(forecastUrl, function(data) {
             console.log(data);
-            data.list.forEach(function(obj, ind){
-                let dt = new Date(obj.dt*1000).toString().slice(0, 21).split(' ');
+            data.list.forEach(function(obj, ind) {
+              let dt = new Date(obj.dt * 1000)
+                .toString()
+                .slice(0, 21)
+                .split(' ');
 
               var daycast = $(`<div>
-                  <span>${obj.main.temp} <span style="font-size: 18px;">&#8451</span></span><br />
-                                <img src=https://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png><br />
-                                <h4>${dt[0]} ${dt[4]}</h4> 
-                            </div>`);
+                      <span>${obj.main.temp} <span style="font-size: 18px;">&#8451</span></span><br />
+                                    <img src=https://openweathermap.org/img/wn/${obj.weather[0].icon}@2x.png><br />
+                                    <h4>${dt[0]} ${dt[4]}</h4> 
+                                </div>`);
               $('.forecast').append(daycast);
-            })
-        })
+            });
+          });
         }
 
         function showPopup() {
@@ -174,18 +181,20 @@
           );
         }
 
-        var check = 1;
+        function main() {}
+
+        var inFahrenheit = 0;
         $('.toggleButton').click(function() {
           var $C = $('#locTemp-c');
           var $F = $('#locTemp-f');
-          if (check) {
+          if (inFahrenheit) {
             $C.hide();
             $F.show();
-            check = 0;
+            inFahrenheit = 0;
           } else {
             $C.show();
             $F.hide();
-            check = 1;
+            inFahrenheit = 1;
           }
         });
         $('.copyright').html(`&copy; ${new Date().getFullYear()}`);

@@ -72,7 +72,7 @@ function fetchData() {
       tooltip
         .attr('data-year', d.Year)
         .html(
-          `${d.Name}: ${d.Nationality} + <br />
+          `${d.Name}: ${d.Nationality} <br />
           Year: ${d.Year}, Time: ${timeFormat(d.Time)}
           ${d.Doping ? `<br/><br/>${d.Doping}` : ''}
         `,
