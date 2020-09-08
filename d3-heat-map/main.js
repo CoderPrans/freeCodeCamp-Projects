@@ -2,7 +2,7 @@ let url =
   'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/global-temperature.json';
 
 let w = 1300,
-  h = 530,
+  h = 730,
   padding = 70;
 
 const months = [
@@ -48,28 +48,41 @@ function fetchData() {
   svg
     .append('g')
     .attr('id', 'x-axis')
-    .attr('transform', `translate(0, ${h - padding / 2} )`)
+    .attr('transform', `translate(0, ${h - 1.5 * padding} )`)
     .call(xaxis);
 
   const y = d3
     .scaleBand()
-    .range([padding / 2, h - padding / 2])
+    .range([padding / 2, h - 1.5 * padding])
     .domain(months);
   // .padding(0.01);
   svg
     .append('g')
     .attr('id', 'y-axis')
-    .attr('transform', `translate(${padding},${0})`)
+    .attr('transform', `translate(${padding}, 0)`)
     .call(d3.axisLeft(y));
 
   let lowest_variance = Math.min(...datav.map(d => d.variance));
   let highest_variance = Math.max(...datav.map(d => d.variance));
   let mid_variance = (lowest_variance + highest_variance) / 2;
+  let mid1 = (lowest_variance + mid_variance) / 2;
+  let mid2 = (highest_variance - mid_variance) / 2;
+  let mid1_5 = (mid1 + mid2) / 2;
+
+  let values = [
+    lowest_variance,
+    mid1,
+    mid1_5,
+    mid_variance,
+    mid2,
+    highest_variance,
+  ];
+  let colors = ['#5779fe', '#139588', '#8cc24c', 'yellow', 'orangered', 'red'];
 
   let colorScale = d3
     .scaleLinear()
-    .range(['blue', 'yellow', 'red'])
-    .domain([lowest_variance, mid_variance, highest_variance]);
+    .range(colors)
+    .domain(values);
 
   let tooltip = d3
     .select('body')
@@ -116,4 +129,22 @@ function fetchData() {
         .style('opacity', 0.9);
     })
     .on('mouseout', () => tooltip.style('opacity', 0));
+
+  let legend = svg
+    .append('g')
+    .attr('id', 'legend')
+    .attr('x', padding)
+    .attr('y', h - padding / 1.2);
+
+  legend
+    .selectAll()
+    .data(colors)
+    .enter()
+    .append('rect')
+    .attr('id', 'legend')
+    .attr('x', (_, i) => padding + i * 40)
+    .attr('y', h - padding / 1.2)
+    .attr('width', 40)
+    .attr('height', 30)
+    .style('fill', d => d);
 })();
