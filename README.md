@@ -2,7 +2,7 @@
 
 ### Front End Libraries Projects
 
-- [Quote Machine](https://coderprans.github.io/fCC/quote_machine.html)
+- [Quote Machine](https://coderprans.github.io/fCC/Quote_Machine/index.html)
 - [Calculator](https://coderprans.github.io/fCC/Calculator/index.html)
 - [Pomodoro](https://coderprans.github.io/fCC/Pomodoro/index.html)
 
