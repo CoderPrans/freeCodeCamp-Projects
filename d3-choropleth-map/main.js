@@ -63,21 +63,29 @@ function fetchEducationData() {
     .attr('d', d3.geoPath())
     .attr('class', 'county')
     .attr('data-fips', d => d.id)
-    .data(educationData)
-    .attr('data-education', d => d.bachelorsOrHigher)
-    .style('fill', d => colorscale(d.bachelorsOrHigher))
+    .attr('data-education', d => {
+      let res = educationData.filter(obj => obj.fips === d.id);
+      return res[0] ? res[0].bachelorsOrHigher : '';
+    })
+    .style('fill', d => {
+      colorscale(d.bachelorsOrHigher);
+      let res = educationData.filter(obj => obj.fips === d.id);
+      return res[0] ? colorscale(res[0].bachelorsOrHigher) : colors[0];
+    })
     .on('mouseover', d => {
+      let res = educationData.filter(obj => obj.fips === d.id);
+
       tooltip
-        .attr('data-education', d.bachelorsOrHigher)
+        .attr('data-education', res[0].bachelorsOrHigher)
         .html(
           `
-                           ${d.area_name}, ${d.state} ${d.bachelorsOrHigher}%
+                           ${res[0].area_name}, ${res[0].state} ${res[0].bachelorsOrHigher}%
                                    `,
         )
         .style('top', d3.event.pageY - 50 + 'px')
         .style('left', d3.event.pageX + 20 + 'px')
         .style('font-size', '14px')
-        .style('background', '#ccffaa')
+        .style('background', '#f5f9cd')
         .style('padding', '10px')
         .style('line-height', '1.5')
         .style('border-radius', '5px')
