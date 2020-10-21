@@ -4,30 +4,34 @@
     <meta charset="UTF-8" />
     <title>FCC Choropleth Map</title>
     <style>
+      body {
+        font-family: sans;
+      }
+      p {
+        margin-bottom: 40px;
+      }
       h1,
       p {
         text-align: center;
       }
       svg {
-        background: #fafafa;
-        border: 1px solid #ccc;
         display: block;
         margin: 0 auto;
       }
-
       .county {
         stroke: none;
       }
-
       .states {
         fill: none;
         stroke: #fff;
         stroke-width: 0.5px;
         stroke-linejoin: round;
       }
-
       .county:hover {
         fill: red;
+      }
+      text {
+        font-size: 14px;
       }
     </style>
   </head>
@@ -41,7 +45,7 @@
     <script src="https://d3js.org/d3.v5.min.js"></script>
     <script src="https://d3js.org/topojson.v3.min.js"></script>
     <script src="https://cdn.freecodecamp.org/testable-projects-fcc/v1/bundle.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-legend/2.25.6/d3-legend.min.js"></script>
     <script src="main.js"></script>
   </body>
-  <script></script>
 </html>

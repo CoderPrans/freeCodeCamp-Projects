@@ -28,6 +28,7 @@ function fetchEducationData() {
 (async function() {
   let countyData = await fetchCountyData();
   console.log(Object.keys(countyData.objects.counties));
+
   let educationData = await fetchEducationData();
   console.log(educationData[0]);
 
@@ -100,4 +101,22 @@ function fetchEducationData() {
     )
     .attr('class', 'states')
     .attr('d', d3.geoPath());
+
+  let linear = d3
+    .scaleLinear()
+    .domain([2.6, 75.1])
+    .range(['#c1e7ff', '#004c6d']);
+
+  svg
+    .append('g')
+    .attr('id', 'legend')
+    .attr('transform', 'translate(480, 10)');
+
+  let legendLinear = d3
+    .legendColor()
+    .shapeWidth(45)
+    .cells([3, 12, 21, 30, 39, 48, 57, 66])
+    .orient('horizontal')
+    .scale(linear);
+  svg.select('#legend').call(legendLinear);
 })();
