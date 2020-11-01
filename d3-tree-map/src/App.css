@@ -1,0 +1,18 @@
+.App {
+  text-align: center;
+}
+
+.App-header {
+  background-color: #282c34;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+    padding: 5px 10px;
+    font-size: 17px;
+    margin: 14px;
+    cursor: pointer;
+}
+
